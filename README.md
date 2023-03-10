@@ -111,6 +111,7 @@ The next three statements in this line set some critical variables that are used
 The next statement `j = int((k - 1) / 2)` sets **j** to the following values based on **k**:
 
 **j**:
+- INT((0 - 1) / 2) = **-1 (No Movement)**
 - INT((1 - 1) / 2) = **0 (Left)**
 - INT((2 - 1) / 2) = **0 (Right)**
 - INT((3 - 1) / 2) = **1 (Down)**
@@ -186,7 +187,37 @@ This results in a very arcade-like "Boop!" sound every time the panda catches th
 
 **Line 10 Subroutine - Move A Sprite Based on Current Sprite Position and Movement Amount**
 
+All of the sprite movement is performed by the 10th and final line of the program. This subroutine is called by line 3 at least once per program loop, and the changing **j** and **d** values are used to specify which sprite to move, which direction to move it, and by what amount.
+
 `10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:j=int(j/2)*2:return`
+
+This may seem like magic, but the BASIC code here is actually quite simple and works well combined with the **j** and **d** calculations in lines 3 and 4.
+
+The first statement `x = peek(v + (j - INT(j / 2) * j)) + d` calculates the new coordinate to use when moving the sprite.
+
+The coordinates of the current position of both sprites are as follows:
+
+- X position of Sprite 0 is v + 0
+- Y position of Sprite 0 is v + 1
+- X position of Sprite 1 is v + 2
+- Y position of Sprite 1 is v + 3
+
+For the first time this sub gets called from line 3 when the joystick has been pushed, the value of **j** will be based on the joystick position:
+
+- INT((1 - 1) / 2) = **0 (Left)**
+- INT((2 - 1) / 2) = **0 (Right)**
+- INT((3 - 1) / 2) = **1 (Down)**
+- INT((4 - 1) / 2) = **1 (Up)**
+
+So, using this value of **j**, the following coordinates will be PEEKed:
+
+- j = 0 : PEEK(v + 0) : Joystick pushed Left or Right - X coordinate of Sprite 0 (panda)
+- j = 1 : PEEK(v + 1) : Joystick pushed Up or Down - Y coordinate of Sprite 0 (panda)
+
+At the end of the expression in this statement, the value of **d** is adding to this coordinate value. If you recall from line 4, **d** will be either a positive or negative value (to move Up or Left for a negative value, Down or Right for a positive value) plus some random fraction multipled by 37. So, at the end of this statement, **x** will be a coordinate that will move the sprite either up or down by a certain amount if the joystick was pushed in the up or down directions, or left or right by that amount if the joystick was pushed in those directions.
+
+The next statement `x = x - int((x) /239) * 239` or `x = x MOD 239` adjusts the destination coordinate using the modulus operator to make sure it doesn't land outside the bounds of the screen coordinates. This allows the sprite to enter the far side of the screen, Pac Man style, if it exits the other side and thereby avoids crashing the program.
+
 
 
 ### BASIC 10Liner Contest Rules
