@@ -40,7 +40,9 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
 
 Here is an explanation of what is happening in each of these lines.
 
-Lines 1 and 2 are the main initialization sequence.
+**Line 1 : Set Memory Location Constants and Sprite Pointers**
+
+Lines 1 is the first of 2 lines in the main initialization sequence.
 
 `1 q=54272:s=12288:v=53248:poke52,48:poke56,48:poke2040,192:poke2041,193:y=0:h=1`
 
@@ -51,6 +53,8 @@ Lines 1 and 2 are the main initialization sequence.
 - poke2040,192:poke2041,193 : These two lines set the pointers for Sprite 0 (panda) and Sprite 1 (donut). Each sprite is 64 bytes in length, so 192 * 64 = 12288 specifies the starting address of Sprite 0, and 193 * 64 = 12352 specifies the starting address of Sprite 1.
 - y=0:h=1 : **y** and **h** are program variables that will be used later and required these intial values.
 
+**Line 2 : Set Sprite Properties and Sprite Data**
+
 `2 pokev,99:pokev+1,99:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8:r=56320`
 
 - pokev,99:pokev+1,99 : If you recall **v** controls the sprites. These two lines set the X and Y position of Sprite 0 (panda). The position of Sprite 1 (donut) will be later set to be relative to the panda. X and Y values of 99 just barely get the sprite visible on the screen, but I didn't have enough space to set these to 3-digit numbers.
@@ -60,6 +64,8 @@ Lines 1 and 2 are the main initialization sequence.
 - pokev+39,1 : This sets the main sprite color of the panda sprite to be white.
 - gosub8:gosub8 : The calls the subroutine at line 8 two times. Each time this runs, it loads the shape data for the each sprite.
 - r=56320 : **r** is the memory address for reading the joystick in port2. Referencing **r** later will allow the program to detect joystick input.
+
+**Line 3 : Start of Main Loop - Call Sprite Movement Subroutines and Check for Sprite Collision**
 
 Line 3 begins the main loop of the game. As the user plays, the program will jump here repeatedly until stopped by the user.
     
@@ -78,6 +84,8 @@ Next, `j=rnd(1)*2+2` sets a value of **j** where a value of 2 is added to a rand
 Now, `gosub10` is performed unconditionally. If you recall from above, GOSUB 10 is the subroutine that moves the sprites. This will be explained more when we cover line 10, but having this subroutine called unconditionally at this point with a random value of **j** allows for the donut to move around even when the panda remains stationary.
 
 The final statement on this line `z=rnd(1)` places a random floating point number between 0 and 1 into the **z** variable.
+ 
+**Line 4 : Read Joystick Position and Calculate Sprite Movement Values** 
  
 `4 f=(peek(r)and15):k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
 
@@ -118,12 +126,28 @@ The final statement in this line `d = (2 * (k - int(k / 2) * 2) - 1) * z * 37` s
 
 As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or  its X/Y coordinates based on **d** to move in the correct direction. Up and Down do indeed move in the correct direction on the screen, but you may notice that Left and Right are reversed from the direction they should move. Fortunately, the user's brain adapts to this control reversal in the horizontal direction, and it doesn't really affect the gameplay. 
 
+**Line 5 : Sprite Shape Data** 
 
 `5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224`
+
+**Line 6 : More Sprite Shape Data**
+
 `6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51`
+
+**Line 7 : More Sprite Shape Data, Reset Sound Effects, and Keep Looping**
+
 `7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:goto3`
+
+**Line 8 : Subroutine - Read Sprite Data and Poke It Into Memory**
+
 `8 z=y+33:forx=ytoz:reada:pokes+x,a:next:forx=ztoz+63:pokes+x,0:next:y=x:return`
+
+**Line 9 : Subroutine - Increment Score and Play Sound Effects**
+
 `9 print"{clr}{home}yum! ";h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,9:pokeq+1,24:pokeq,155`
+
+**Line 10 Subroutine - Move A Sprite Based on Current Sprite Position and Movement Amount
+
 `10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:j=int(j/2)*2:return`
 
 
