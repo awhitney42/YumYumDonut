@@ -93,12 +93,30 @@ The first statement `f = (peek(r) and 15)` sets the variable **f** to be the res
 
 The next three statements in this line set some critical variables that are used in the sprite movement routine that will be called in the next iteration of the main loop when line 3 is reached again. First the value of **k** is set, which if you recall will be used to perform an additional sprite movement at the start of line 3 iif k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = (f - int(f / 5) * 5)` or **f** MODULUS 5:
 
-- 11 MOD 5 = 1 (Left)
--  7 MOD 5 = 2 (Right)
-- 13 MOD 5 = 3 (Down)
-- 14 MOD 5 = 4 (Up)
-- 15 MOD 5 = 0 (No Direction Pushed)
+**k**:
+- 11 MOD 5 = **1 (Left)**
+-  7 MOD 5 = **2 (Right)**
+- 13 MOD 5 = **3 (Down)**
+- 14 MOD 5 = **4 (Up)**
+- 15 MOD 5 = **0 (No Direction Pushed)**
 
+The next statement `j = int((k - 1) / 2)` sets **j** to the following values based on **k**:
+
+**j**:
+- INT((1 - 1) / 2) = **0 (Left)**
+- INT((2 - 1) / 2) = **0 (Right)**
+- INT((3 - 1) / 2) = **1 (Down)**
+- INT((4 - 1) / 2) = **1 (Up)**
+
+The final statement in this line `d = (2 * (k - int(k / 2) * 2) - 1) * z * 37` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * 37`. If you recall from line 3, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **37**. This is a value that applies a certain amount of distance on the screen when the sprites are moved in the subroutine at line 10. 
+
+**d** as derived from **k**, before applied a randomized sprite movement jump:
+- (2 * (1 MOD 2) - 1) = **1 (Left)**
+- (2 * (2 MOD 2) - 1) = **-1 (Right)**
+- (2 * (3 MOD 2) - 1) = **1 (Down)**
+- (2 * (4 MOD 2) - 1) = **-1 (Up)**
+
+As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or  its X/Y coordinates based on **d** to move in the correct direction. Up and Down do indeed move in the correct direction on the screen, but you may notice that Left and Right are reversed from the direction they should move. Fortunately, the user's brain adapts to this control reversal in the horizontal direction, and it doesn't really affect the gameplay. 
 
 
 `5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224`
