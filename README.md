@@ -128,6 +128,8 @@ As you can see, **d** is either positive or negative based on the joystick direc
 
 **Line 5 : Sprite Shape Data** 
 
+Lines 5, 6, and 7 hold the sprite data that defines the shapes of the panda and the donut sprites. Each sprite has the same amount of shape data (33 bytes), so that the subroutine at line 8 that POKEs (draws) the sprite into memory could be run without needing to specify the sprite size and thereby saving space in this 10-line program. A 34th zero-value byte was laster added to each sprite to further save program space, by allowing the second FOR loop in line 8 to start the iterator that fills the remainder of the sprite with zeroes right where the previous loop ended, overwriting the final sprite data byte, and thereby avoiding having to increment the iterator index in the program!
+
 `5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224`
 
 **Line 6 : More Sprite Shape Data**
@@ -146,7 +148,7 @@ As you can see, **d** is either positive or negative based on the joystick direc
 
 `9 print"{clr}{home}yum! ";h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,9:pokeq+1,24:pokeq,155`
 
-**Line 10 Subroutine - Move A Sprite Based on Current Sprite Position and Movement Amount
+**Line 10 Subroutine - Move A Sprite Based on Current Sprite Position and Movement Amount**
 
 `10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:j=int(j/2)*2:return`
 
