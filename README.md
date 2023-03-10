@@ -81,6 +81,26 @@ The final statement on this line `z=rnd(1)` places a random floating point numbe
  
 `4 f=(peek(r)and15):k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
 
+Line 4 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 7.
+
+The first statement `f = (peek(r) and 15)` sets the variable **f** to be the result of a PEEK in location **r**, which is the address showing the current state of the joystick, with an AND operation with 15 as the second operand. With 15 as the operand for the AND, this produces the following results:
+
+- 7 if the joystick is pushed right
+- 11 if the joystick is pushed left
+- 13 if the joystick is pushed down
+- 14 if the joystick is pushed up
+- 15 if the joystick is not pushed at all
+
+The next three statements in this line set some critical variables that are used in the sprite movement routine that will be called in the next iteration of the main loop when line 3 is reached again. First the value of **k** is set, which if you recall will be used to perform an additional sprite movement at the start of line 3 iif k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = (f - int(f / 5) * 5)` or **f** MODULUS 5:
+
+- 7 MOD 5 = 2 (Right)
+- 11 MOD 5 = 1 (Left)
+- 13 MOD 5 = 3 (Down)
+- 14 MOD 5 = 4 (Up)
+- 15 MOD 5 = 0 (No Direction Pushed)
+
+
+
 
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224
     6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51
