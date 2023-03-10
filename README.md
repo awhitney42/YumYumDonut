@@ -34,7 +34,7 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224
     6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51
     7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:goto3
-    8 z=y+33:forx=ytoz:reada:pokes+x,a:next:forx=ztoz+63:pokes+x,0:next:y=x:return
+    8 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+61:pokes+x,0:next:y=x:return
     9 print"{clr}{home}yum! ";h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,9:pokeq+1,24:pokeq,155
     10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:j=int(j/2)*2:return
 
@@ -128,7 +128,7 @@ As you can see, **d** is either positive or negative based on the joystick direc
 
 **Line 5 : Sprite Shape Data** 
 
-Lines 5, 6, and 7 hold the sprite data that defines the shapes of the panda and the donut sprites. Each sprite has the same amount of shape data (33 bytes), so that the subroutine at line 8 that POKEs (draws) the sprite into memory could be run without needing to specify the sprite size and thereby saving space in this 10-line program. A 34th zero-value byte was laster added to each sprite to further save program space, by allowing the second FOR loop in line 8 to start the iterator that fills the remainder of the sprite with zeroes right where the previous loop ended, overwriting the final sprite data byte, and thereby avoiding having to increment the iterator index in the program!
+Lines 5, 6, and 7 hold the sprite data that defines the shapes of the panda and the donut sprites. Each sprite has the same amount of shape data (33 bytes), so that the subroutine at line 8 that POKEs (draws) the sprite into memory could be run without needing to specify the sprite size and thereby saving space in this 10-line program.
 
 `5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224`
 
@@ -138,11 +138,27 @@ Lines 5, 6, and 7 hold the sprite data that defines the shapes of the panda and 
 
 **Line 7 : More Sprite Shape Data, Reset Sound Effects, and Keep Looping**
 
+Line 7 has the remainder of the sprite data. There are two additional statements at the end.
+
 `7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:goto3`
+
+The first statement `poke q + 4, 0` resets the sound waveform byte on the SID chip so that we can later play a sound effect in the scoring subroutine in line 9.
+
+The final statement is the last statement in the program's main loop `goto 3` where it does just that, jump to line 3 to start the main loop all over again!
 
 **Line 8 : Subroutine - Read Sprite Data and Poke It Into Memory**
 
-`8 z=y+33:forx=ytoz:reada:pokes+x,a:next:forx=ztoz+63:pokes+x,0:next:y=x:return`
+Line 8 is the first of the three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that hold the memory address of the start of Sprite 0.
+
+`8 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:return`
+
+This subroutine has two loops. The first FOR loop starts at the value in **y** (which is initially set to 0 on line 1) and the loops each iteration by 1 until it reaches y + 32, in order to load 33 bytes of data into each sprite data location in memory. The loop iterator index **x** is added to the sprite memory location **s** (memory location 12288) to specify the location to POKE the sprite data byte into memory. So, when this subroutine runs the first time, this first loop POKEs data into 12288+0 to 12288+32 to draw Sprite 0.
+
+During each iteration of this loop, it READs the sprite data from the DATA bytes contained in lines 5 through 7.
+
+The second FOR loop in this subroutine writes zeroes to the remaining sprite data in memory to make sure that is cleared out and the sprite shape is drawn as intended. It loops from **z** (which you may recall is **y + 32**) until **z + 31** to reach the 64th and final sprite data byte. So, the first time this subroutine runs, this second loop POKEs a 0 byte into 12288+33 to 12288+63 to finish drawing Sprite 0.
+
+The final statement in this sub before RETURNing is `y=x`, which after the first run, it sets the **y** value to 63 to set the sprite data from 12288+63 to 12288+127 for drawing Sprite 1.
 
 **Line 9 : Subroutine - Increment Score and Play Sound Effects**
 
