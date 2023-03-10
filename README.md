@@ -218,7 +218,26 @@ At the end of the expression in this statement, the value of **d** is adding to 
 
 The next statement `x = x - int((x) /239) * 239` or `x = x MOD 239` adjusts the destination coordinate using the modulus operator to make sure it doesn't land outside the bounds of the screen coordinates. This allows the sprite to enter the far side of the screen, Pac Man style, if it exits the other side and thereby avoids crashing the program.
 
+The next statement `poke v + j, x` simply moves the sprite to **x** coordinate using the **j** index! As we just discussed, **j** will be 0 or 1 when this sub is called after the joystick is moved, so this moves the panda (Sprite 0) whenever the joystick is moved to allow the user to control only the panda.
 
+The final statement `j = int(j / 2) * 2` will set **j** to 0 when the current value of **j** is either 0 or 1. More on this in a moment.
+
+Next the subroutine RETURNs to line 3. If it had just been called because of a joystick push (as in the explanation we just provided), then line 3 will recalculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be some number between approximately 0.0001 and 3.9999 (see more explanation above regarding line 3). In that case, line 3 will also call subroutine 10 one more time with this new value of **j**.
+
+This time sub 10 runs, **d** remains the same, but **j** is now that random value versus something specified to move the panda based on joystick movement. As such, this has one of two effects. Either it moves the donut sprite in some random direction, or it simply moves the panda to its current position which has the effect of obviously not moving the panda at all.
+
+As you can see, this provides the mechanism by which the panda only moves on joystick input as well as allowing the donut to jump around at seemingly random intervals in a random direction.
+
+Let's take the possible inputs of **j** in this case, and see which sprite and what coordinates result:
+
+- j >=0 and j < 1 : PEEK(v + 0) : Joystick pushed Left or Right - **X** coordinate of Sprite 0 (**panda**)
+- j >=1 and j < 2 : PEEK(v + 1) : Joystick pushed Left or Right - **Y** coordinate of Sprite 0 (**panda**)
+- j >=2 and j < 3 : PEEK(v + 2) : Joystick pushed Left or Right - **X** coordinate of Sprite 1 (**donut**)
+- j >=2 and j < 4 : PEEK(v + 3) : Joystick pushed Left or Right - **Y** coordinate of Sprite 1 (**donut**)
+
+When **j** contains a number that will move the panda, the final coordinate will be the same as where the panda just moved if there was a joystick push (other than for the first loop of the game, which is why the panda initially jumps right at the start of the game), and so the panda just remains in the same spot!
+
+When j contains a number that will move the donut, however, the final coordinate will always jump the donut because when the subsequent `pokev+j,x` for a value where **j** is 2 or 3, then 
 
 ### BASIC 10Liner Contest Rules
 
