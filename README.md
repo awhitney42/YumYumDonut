@@ -144,7 +144,7 @@ Line 7 has the remainder of the sprite data. There are two additional statements
 
 The first statement `poke q + 4, 0` resets the sound waveform byte on the SID chip so that we can later play a sound effect in the scoring subroutine in line 9.
 
-The final statement is the last statement in the program's main loop `goto 3` where it does just that, jump to line 3 to start the main loop all over again!
+The final statement is the last statement in the program's main loop `goto 3` where it does just that, jumping to line 3 to start the main loop all over again!
 
 **Line 8 : Subroutine - Read Sprite Data and Poke It Into Memory**
 
@@ -162,7 +162,27 @@ The final statement in this sub before RETURNing is `y=x`, which after the first
 
 **Line 9 : Subroutine - Increment Score and Play Sound Effects**
 
+When the sprites collide, subroutine 9 is called. This prints increments the Yum score and then plays a sound effect.
+
 `9 print"{clr}{home}yum! ";h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,9:pokeq+1,24:pokeq,155`
+
+The `print"{clr}{home}yum! ";h` statement prints the current YUM! score to the top of the screen.
+
+The `h=h+1` statement obviously increments the score counter.
+
+The remaining statements that poke to the memory location at **q** controls the SID sound chip to play the sound effects.
+
+`pokeq+5,6` sets the attack and decay values for sound voice 1 to 6 (attack = 0, decay = 6)
+
+`pokeq+4,17` sets the sound waveform to 
+
+`pokeq+24,9` sets the volume to 9 out of 15.
+
+`pokeq+1,24` sets the high frequency of voice 1 to 24.
+
+`pokeq,155` sets the low frequency of voice 1 to 155.
+
+This results in a very arcade-like "Boop!" sound every time the panda catches the donut, and I believe adds significantly to the gameplay experience!
 
 **Line 10 Subroutine - Move A Sprite Based on Current Sprite Position and Movement Amount**
 
