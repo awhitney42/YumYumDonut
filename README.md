@@ -147,7 +147,7 @@ The first statement `poke q + 4, 0` resets the sound waveform byte on the SID ch
 
 The final statement is the last statement in the program's main loop `goto 3` where it does just that, jumping to line 3 to start the main loop all over again!
 
-**Line 8 : Subroutine - Read Sprite Data and Poke It Into Memory**
+**Line 8 : SUBROUTINE - Read Sprite Data and Poke It Into Memory**
 
 Line 8 is the first of the three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that hold the memory address of the start of Sprite 0.
 
@@ -161,7 +161,7 @@ The second FOR loop in this subroutine writes zeroes to the remaining sprite dat
 
 The final statement in this sub before RETURNing is `y=x`, which after the first run, it sets the **y** value to 63 to set the sprite data from 12288+63 to 12288+127 for drawing Sprite 1.
 
-**Line 9 : Subroutine - Increment Score and Play Sound Effects**
+**Line 9 : SUBROUTINE - Increment Score and Play Sound Effects**
 
 When the sprites collide, subroutine 9 is called. This prints increments the Yum score and then plays a sound effect.
 
@@ -185,34 +185,36 @@ The remaining statements that poke to the memory location at **q** controls the 
 
 This results in a very arcade-like "Boop!" sound every time the panda catches the donut, and I believe adds significantly to the gameplay experience!
 
-**Line 10 Subroutine - Move A Sprite Based on Current Sprite Position and Movement Amount**
+If you have eagle eyes, you may have noticed that line 9 doesn't end with a RETURN even though it's a subroutine. Omitting the RETURN here saves space. So, at the conclusion of line 9, the program continues along and runs the subroutine at line 10. The explanation of line 10 follows below, but rest assured that running line 10 immediately after running line 9 actually has no effect on the sprites, because line 10 would already have been called immediately before a sprite collision, and the input values of **j** and **d** that control the sprite movement will not have changed since it was last called just prior to calling sub 9.
+
+**Line 10 SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount**
 
 All of the sprite movement is performed by the 10th and final line of the program. This subroutine is called by line 3 at least once per program loop, and the changing **j** and **d** values are used to specify which sprite to move, which direction to move it, and by what amount.
 
 `10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:j=int(j/2)*2:return`
 
-This may seem like magic, but the BASIC code here is actually quite simple and works well combined with the **j** and **d** calculations in lines 3 and 4.
+This line may seem like magic. (It still does to me, a bit, and I wrote it!) The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** at the time this subroutine is called.
 
 The first statement `x = peek(v + (j - INT(j / 2) * j)) + d` calculates the new coordinate to use when moving the sprite.
 
-The coordinates of the current position of both sprites are as follows:
+The coordinates of the current position of both sprites are always as follows:
 
-- X position of Sprite 0 is v + 0
-- Y position of Sprite 0 is v + 1
-- X position of Sprite 1 is v + 2
-- Y position of Sprite 1 is v + 3
+- v + 0 : the X position of Sprite 0 (panda)
+- v + 1 : the Y position of Sprite 0 (panda)
+- v + 2 : the X position of Sprite 1 (donut)
+- v + 3 : the Y position of Sprite 1 (donut)
 
-For the first time this sub gets called from line 3 when the joystick has been pushed, the value of **j** will be based on the joystick position:
+If sub 10 gets called from line 3 when the joystick has been pushed, the value of **j** will be based on the joystick position:
 
-- INT((1 - 1) / 2) = **0 (Left)**
-- INT((2 - 1) / 2) = **0 (Right)**
-- INT((3 - 1) / 2) = **1 (Down)**
-- INT((4 - 1) / 2) = **1 (Up)**
+- **j** = INT((**1** - 1) / 2) = **0** (left)
+- **j** = INT((**2** - 1) / 2) = **0** (right)
+- **j** = INT((**3** - 1) / 2) = **1** (down)
+- **j** = INT((**4** - 1) / 2) = **1** (up)
 
 So, using this value of **j**, the following coordinates will be PEEKed:
 
-- j = 0 : PEEK(v + 0) : Joystick pushed Left or Right - X coordinate of Sprite 0 (panda)
-- j = 1 : PEEK(v + 1) : Joystick pushed Up or Down - Y coordinate of Sprite 0 (panda)
+- j = 0 : PEEK(v + 0) : X coordinate of Sprite 0 (panda) : joystick was pushed left or right
+- j = 1 : PEEK(v + 1) : Y coordinate of Sprite 0 (panda) : joystick was pushed up or down
 
 At the end of the expression in this statement, the value of **d** is adding to this coordinate value. If you recall from line 4, **d** will be either a positive or negative value (to move Up or Left for a negative value, Down or Right for a positive value) plus some random fraction multipled by 37. So, at the end of this statement, **x** will be a coordinate that will move the sprite either up or down by a certain amount if the joystick was pushed in the up or down directions, or left or right by that amount if the joystick was pushed in those directions.
 
