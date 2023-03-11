@@ -38,7 +38,7 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
     9 print"{clr}{home}yum! ";h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,9:pokeq+1,24:pokeq,155
     10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:return
 
-Below is an explanation of what happens in each of these lines.
+Here is an explanation of what happens in each of these program lines.
 
 **Line 1 : Set Memory Location Constants and Sprite Pointers**
 
@@ -83,7 +83,7 @@ With the `f=(peek(v+30)and1)` statement, **v+30** is the memory location that in
 
 The next statement `on f gosub 9` will go to the subroutine at line 9 if the value of **f** is 1. In other words, if the sprites collide then GOSUB 9 will be performed. As you can probably guess, subroutine 9 contains the actions for handling when the panda successfully takes a bite of the donut!
 
-Then `j=rnd(1)*2+2` sets a value of **j** where a value of 2 is added to a random floating point number between approximately 2.0001 and 3.9999. You will see the use of **j** in just a bit.
+Then `j=rnd(1)*2+2` sets a value of **j** to be a random floating point number between approximately 2.0001 and 3.9999. You will see the use of **j** in just a bit.
 
 Next, `gosub10` is performed unconditionally. If you recall from above, GOSUB 10 is the subroutine that moves the sprites. This will be explained more when we cover line 10, but having this subroutine called unconditionally at this point with a random value of **j** allows for the donut to move around even when the panda remains stationary.
 
@@ -124,12 +124,15 @@ The next statement `j = int((k - 1) / 2)` sets **j** to the following values bas
 The final statement in this line `d = (2 * (k - int(k / 2) * 2) - 1) * z * 37` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * 37`. If you recall from line 3, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **37**. Using 37 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 10. 
 
 So **d** as derived from **k**, before the random jump value is applied, will be the following values:
+- (2 * (0 MOD 2) - 1) = **-1 (No Movement)**
 - (2 * (1 MOD 2) - 1) = **1 (Left)**
 - (2 * (2 MOD 2) - 1) = **-1 (Right)**
 - (2 * (3 MOD 2) - 1) = **1 (Down)**
 - (2 * (4 MOD 2) - 1) = **-1 (Up)**
 
 As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or decrease its X/Y coordinates based on **d**, moving it in the correct direction. When you play Yum Yum Donut, you will see that up and down do indeed move in the correct direction on the screen, but you may notice that left and right are reversed from the direction they should move. Fortunately, the user's brain adapts to this control reversal in the horizontal direction, and it doesn't really affect the gameplay.
+
+If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (k - int(k / 2) * 2) - 1) * z * 37` or `1 * z * 37`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and 37, providing the random jump distance for the donut. 
 
 **Line 5 : Sprite Shape Data** 
 
