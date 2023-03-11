@@ -239,14 +239,16 @@ Finally, the subroutine RETURNs to line 3.
 
 At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
 
-Given these possible inputs of **j**, only sprite coordinates for the donut will be chosen:
+Given these values of **j**, when sub 10 runs `peek(v + (j - INT(j / 2) * j))` this will PEEK the following locations:
 
-- j >=2 and j < 3 : PEEK(v + 2) : Joystick pushed Left or Right - **X** coordinate of Sprite 1 (**donut**)
-- j >=2 and j < 4 : PEEK(v + 3) : Joystick pushed Left or Right - **Y** coordinate of Sprite 1 (**donut**)
+- j >=2 and j < 3 : PEEK(v + 0) : **X** coordinate of Sprite 0 (**panda**)
+- j >=2 and j < 4 : PEEK(v + 1) : **Y** coordinate of Sprite 0 (**panda**)
 
-(You will see that PEEK accepts the input of `v + j` where **j** is a floating point number, and it must simply run INT on this value internally.)
+(You will see that PEEK and POKE both accept the input of `v + j` in line 10, where **j** is a floating point number, so they must simply run INT on this value internally.)
 
-Therefore when sub 10 is called at the end of line 3, it jumps the donut a random direction **j** and random distance **d**.
+So, in the expression `x = peek(v + (j - INT(j / 2) * j)) + d` the value from the PEEK will be based on the position of the panda.
+
+With there having been no joystick movement, **d** will always be a negative random number between 0 and 37 based on the calculation in line 4. The final value of **x** from this statement therefore will be the current X or Y coordinate of the panda minus some random number between 0 and 37. Therefore the donut will always move some random amount relative to the current position of the panda.
 
 Now you can understand the sprite movement for the game. When line 10 runs, either the panda is moved in a controlled direction specified by the joystick push or the donut makes a random jump!
 
