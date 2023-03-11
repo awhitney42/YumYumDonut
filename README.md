@@ -208,7 +208,7 @@ The coordinates of the current position of both sprites are always as follows:
 - **v + 2** : the X position of Sprite 1 (donut)
 - **v + 3** : the Y position of Sprite 1 (donut)
 
-** Moving the Panda Based on Joystick Push**
+**Moving the Panda Based on Joystick Push**
 
 If sub 10 gets called from line 3 when the joystick has been pushed, the value of **j** will be based on the joystick position:
 
@@ -232,7 +232,7 @@ The next statement `poke v + j, x` simply moves the sprite to the **x** coordina
 
 Finally, the subroutine RETURNs to line 3.
 
-** The Random Jumping Donut **
+**The Random Jumping Donut**
 
 At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
 
