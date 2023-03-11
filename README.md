@@ -230,9 +230,11 @@ The next statement `x = x - int((x) /239) * 239` or `x = x MOD 239` adjusts the 
 
 The next statement `poke v + j, x` simply moves the sprite to the **x** coordinate using the **j** index! As we just discussed, **j** will be 0 or 1 when this sub is called after the joystick is moved, so this always moves the panda (Sprite 0) whenever the joystick is moved, allowing the user to control only the panda!
 
-The final statement `j = int(j / 2) * 2` will set **j** to 0 when the current value of **j** is either 0 or 1. More on this in a bit.
+Finally, the subroutine RETURNs to line 3.
 
-At this point, the subroutine RETURNs to line 3. At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
+** The Random Jumping Donut **
+
+At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
 
 Given these possible inputs of **j**, only sprite coordinates for the donut will be chosen:
 
