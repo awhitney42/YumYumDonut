@@ -198,7 +198,7 @@ If you have eagle eyes, you may have noticed that line 9 doesn't end with a RETU
 
 All of the sprite movement is performed by the 10th and final line of the program. This subroutine is called by line 3 at least once per program loop, and the **j** and **d** values are used to specify which sprite to move, which direction to move it, and by what amount.
 
-`10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:j=int(j/2)*2:return`
+`10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:return`
 
 This line still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when the sub is called and then how they affect the sprite movement. The explanation is very long, but this is with the goal of making sure it is understood how this one line (interacting with lines 3 and 4 where **j** and **d** are calculated) can control all sprite movement in the entire game!
 
