@@ -120,7 +120,7 @@ The next statement `j = int((k - 1) / 2)` sets **j** to the following values bas
 The final statement in this line `d = (2 * (k - int(k / 2) * 2) - 1) * z * 37` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * 37`. If you recall from line 3, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **37**. This is a value that applies a certain amount of distance on the screen when the sprites are moved in the subroutine at line 10. 
 
 **d** as derived from **k**, before applied a randomized sprite movement jump:
-- (2 * (1 MOD 2) - 1) = **1 (Left)**
+- - (2 * (1 MOD 2) - 1) = **1 (Left)**
 - (2 * (2 MOD 2) - 1) = **-1 (Right)**
 - (2 * (3 MOD 2) - 1) = **1 (Down)**
 - (2 * (4 MOD 2) - 1) = **-1 (Up)**
@@ -228,22 +228,18 @@ The next statement `poke v + j, x` simply moves the sprite to the **x** coordina
 
 The final statement `j = int(j / 2) * 2` will set **j** to 0 when the current value of **j** is either 0 or 1. More on this in a bit.
 
-At this point, the subroutine RETURNs to line 3. If it had just been called because of a joystick push (as in the explanation we just provided), then line 3 will recalculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be some number between approximately 0.0001 and 3.9999 (see more explanation above regarding line 3). In this case, line 3 will also call subroutine 10 one more time with this new value of **j**.
+At this point, the subroutine RETURNs to line 3. At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
 
-Now, when sub 10 runs a second time from line 3, **d** remains the same as it was if sub 10 was called a moment ago for a joytick push, but **j** is now that random value between 0 and 3 as appoached to a specific value indicating the joystick push direction. As such, this has one of two effects. *Either* it moves the donut sprite according to the **d** distance, *or* it simply moves the panda to the same position as it was just moved for a joystick push, which obviously does not really move the panda at all.
+Given these possible inputs of **j**, only sprite coordinates for the donut will be chosen:
 
-Therefore when sub 10 is called, it either moves the panda according to the joystick or it jumps the donut in a random direction and distance. This behavior is apparent and describes the sprite movement for the whole game. Continue reading to see why the donut continues to jump around as the program loops and **j** is recalculated on lines 3 and 10 on each iteration.
-
-Let's take the possible inputs of **j** in this case, and see which sprite and what coordinates result:
-
-- j >=0 and j < 1 : PEEK(v + 0) : Joystick pushed Left or Right - **X** coordinate of Sprite 0 (**panda**)
-- j >=1 and j < 2 : PEEK(v + 1) : Joystick pushed Left or Right - **Y** coordinate of Sprite 0 (**panda**)
 - j >=2 and j < 3 : PEEK(v + 2) : Joystick pushed Left or Right - **X** coordinate of Sprite 1 (**donut**)
 - j >=2 and j < 4 : PEEK(v + 3) : Joystick pushed Left or Right - **Y** coordinate of Sprite 1 (**donut**)
 
-When **j** contains a number that will move the panda, the final coordinate will be the same as where the panda just moved if there was a joystick push (other than for the first loop of the game, which is why the panda initially jumps right at the start of the game), and so the panda just remains in the same spot!
+(You will see that PEEK accepts the input of `v + j` where **j** is a floating point number, and it must simply run INT on this value internally.)
 
-When j contains a number that will move the donut, however, the final coordinate will always jump the donut because when the subsequent `pokev+j,x` for a value where **j** is 2 or 3, then 
+Therefore when sub 10 is called at the end of line 3, it jumps the donut a random direction **j** and random distance **d**.
+
+Now you can understand the sprite movement for the game. When line 10 runs, either the panda is moved in a controlled direction specified by the joystick push or the donut makes a random jump!
 
 ### BASIC 10Liner Contest Rules
 
