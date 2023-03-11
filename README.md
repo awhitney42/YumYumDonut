@@ -139,13 +139,13 @@ Lines 5, 6, and 7 hold the sprite data that defines the shapes of the panda and 
 
 **Line 6 : More Sprite Shape Data**
 
-`6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51`
+`6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51`
 
 **Line 7 : More Sprite Shape Data, Reset Sound Effects, and Keep Looping**
 
 Line 7 has the remainder of the sprite data. There are two additional statements at the end.
 
-`7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:goto3`
+`7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:pokeq+4,0:goto3`
 
 After the sprite data in line 7, the next statement `poke q + 4, 0` resets the sound waveform byte on the SID chip so that we can later play a sound effect in the scoring subroutine in line 9.
 
