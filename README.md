@@ -29,8 +29,8 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
 
     1 q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1
     2 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8
-    3 onkgosub10,10,10,10:f=(peek(v+30)and1):onfgosub9:j=z*2+2:gosub10
-    4 f=(peek(r)and15):k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37
+    3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10
+    4 f=peek(r)and15:k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224
     6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51
     7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:z=rnd(1):goto3
@@ -73,13 +73,13 @@ As our BASIC program will never use that much of free memory, we can safely omit
 
 Line 3 begins the main loop of the game. As the user plays, the program will jump here repeatedly until stopped by the user.
     
-`3 onkgosub10,10,10,10:f=(peek(v+30)and1):onfgosub9:j=z*2+2:gosub10`
+`3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10`
 
 The first statement is `on k gosub 10, 10, 10, 10`. The **ON** keyword in Commodore BASIC 2 provides a way to jump to various sepcified program locations, either as a GOTO or a GOSUB based on an indexed variable. The ON keyword is used twice in this line and was a great way to save space in the control logic!
 
 The `on k gosub 10, 10, 10, 10` evaluates the value of **k**, and then performs a GOSUB to line 10 if the value of **k** is 1, 2, 3, or 4. If **k** is less than 1 or more than 4, then no jump will be taken. We will later see that **k** will be set based on the state of the joystick, and the subroutine at line 10 controls the sprite movement appropriately for given values of **k** and other variables **d** and **j** whose values will be calcuated based on **k** prior to calling the subroutine.
 
-With the `f=(peek(v+30)and1)` statement, **v+30** is the memory location that indicates a sprite collision. The **f** variable is the result of a **PEEK** at the value in that location with a boolean **AND** operation with an operand of 1. Using an operand of 1 for this AND checks for any sprite collision with Sprite 0 (panda), where a resulting value of 1 indicates a collision with another sprite (the donut).
+With the `f= peek(v + 30) and 1` statement, **v+30** is the memory location that indicates a sprite collision. The **f** variable is the result of a **PEEK** at the value in that location with a boolean **AND** operation with an operand of 1. Using an operand of 1 for this AND checks for any sprite collision with Sprite 0 (panda), where a resulting value of 1 indicates a collision with another sprite (the donut).
 
 The next statement `on f gosub 9` will go to the subroutine at line 9 if the value of **f** is 1. In other words, if the sprites collide then GOSUB 9 will be performed. As you can probably guess, subroutine 9 contains the actions for handling when the panda successfully takes a bite of the donut!
 
@@ -89,11 +89,11 @@ Next, `gosub10` is performed unconditionally. If you recall from above, GOSUB 10
  
 **Line 4 : Read Joystick Position and Calculate Sprite Movement Values** 
  
-`4 f=(peek(r)and15):k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
+`4 f=peek(r)and15:k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
 
 Line 4 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 7.
 
-The first statement `f = (peek(r) and 15)` sets the variable **f** to be the result of a PEEK in location **r**, the address showing the current state of the joystick, with an AND operation using 15 as the second operand. The value of 15 for the second operand for AND produces the following results:
+The first statement `f = peek(r) and 15` sets the variable **f** to be the result of a PEEK in location **r**, the address showing the current state of the joystick, with an AND operation using 15 as the second operand. The value of 15 for the second operand for AND produces the following results:
 
 - 7 if the joystick is pushed right
 - 11 if the joystick is pushed left
