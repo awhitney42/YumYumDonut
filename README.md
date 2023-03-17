@@ -29,11 +29,11 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
 
     1 q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1
     2 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8
-    3 onkgosub10,10,10,10:f=(peek(v+30)and1):onfgosub9:j=rnd(1)*2+2:gosub10:z=rnd(1)
+    3 onkgosub10,10,10,10:f=(peek(v+30)and1):onfgosub9:j=rnd(1)*2+2:gosub10
     4 f=(peek(r)and15):k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224
     6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51
-    7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:goto3
+    7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:z=rnd(1):goto3
     8 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:return
     9 print"{clr}{home}yum! ";h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,9:pokeq+1,24:pokeq,155
     10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:return
@@ -73,7 +73,7 @@ As our BASIC program will never use that much of free memory, we can safely omit
 
 Line 3 begins the main loop of the game. As the user plays, the program will jump here repeatedly until stopped by the user.
     
-`3 onkgosub10,10,10,10:f=(peek(v+30)and1):onfgosub9:j=rnd(1)*2+2:gosub10:z=rnd(1)`
+`3 onkgosub10,10,10,10:f=(peek(v+30)and1):onfgosub9:j=z*2+2:gosub10`
 
 The first statement is `on k gosub 10, 10, 10, 10`. The **ON** keyword in Commodore BASIC 2 provides a way to jump to various sepcified program locations, either as a GOTO or a GOSUB based on an indexed variable. The ON keyword is used twice in this line and was a great way to save space in the control logic!
 
@@ -83,11 +83,9 @@ With the `f=(peek(v+30)and1)` statement, **v+30** is the memory location that in
 
 The next statement `on f gosub 9` will go to the subroutine at line 9 if the value of **f** is 1. In other words, if the sprites collide then GOSUB 9 will be performed. As you can probably guess, subroutine 9 contains the actions for handling when the panda successfully takes a bite of the donut!
 
-Then `j=rnd(1)*2+2` sets a value of **j** to be a random floating point number between approximately 2.0001 and 3.9999. You will see the use of **j** in just a bit.
+Then `j=z*2+2` sets a value of **j** to be a random floating point number between approximately 2.0001 and 3.9999. You will see the use of **j** in just a bit.
 
 Next, `gosub10` is performed unconditionally. If you recall from above, GOSUB 10 is the subroutine that moves the sprites. This will be explained more when we cover line 10, but having this subroutine called unconditionally at this point with a random value of **j** allows for the donut to move around even when the panda remains stationary.
-
-The final statement on this line `z=rnd(1)` places a random floating point number between 0 and 1 into the **z** variable.
  
 **Line 4 : Read Joystick Position and Calculate Sprite Movement Values** 
  
@@ -146,11 +144,13 @@ Lines 5, 6, and 7 hold the sprite data that defines the shapes of the panda and 
 
 **Line 7 : More Sprite Shape Data, Reset Sound Effects, and Keep Looping**
 
-Line 7 has the remainder of the sprite data. There are two additional statements at the end.
+Line 7 has the remainder of the sprite data. There are three additional statements at the end.
 
-`7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:pokeq+4,0:goto3`
+`7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:pokeq+4,0:z=rnd(1):goto3`
 
 After the sprite data in line 7, the next statement `poke q + 4, 0` resets the sound waveform byte on the SID chip so that we can later play a sound effect in the scoring subroutine in line 9.
+
+`z=rnd(1)` places a random floating point number between 0 and 1 into the **z** variable.
 
 The last statement is the final statement in the program's main loop. `goto 3` does just that! It jumps to line 3, starting the main loop all over again!
 
