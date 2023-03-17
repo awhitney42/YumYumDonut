@@ -8,7 +8,7 @@ Yum Yum Donut is my first video game creation! I made it as an entry into the [B
 
 ### Loading the Game
 
-Drag yumyumdonut.D64 to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings and configured for a keyboard keymap that works for you.
+Drag yumyumdonut.D64 to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that it is configured for a keyboard keymap that works for you.
 
 If you have native hardware, copy the D64 image to a floppy disk or load it via a device such as an SD2IEC. Assuming your floppy or SD2IEC drive is device #8, then issue the following commands:
 
@@ -19,11 +19,11 @@ If you have native hardware, copy the D64 image to a floppy disk or load it via 
 
 You are a panda with a hankering for a scrumptious donut. When you try to take a bite, you are surprised to see the donut running away! It is so tasty, you must pursue it and take as many yummy bites as possible.
 
-Use the joystick (in port 2) to move the panda in pursuit of the donut. Each successful bite increases your experience of Yum!
+Use the joystick to move the panda in pursuit of the donut. Each successful bite increases your experience of Yum!
 
 ### BASIC Source Code Explanation
 
-The BASIC 10Liner Contest creates the extreme challenge of creating an entire video game in 10 lines of BASIC code. Each logical line has a max of 80 characters allowed. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC 2 on the Commodore 64.
+The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code. Each logical line has a max of 80 characters allowed. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
 
 Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
 
@@ -42,7 +42,7 @@ Here is an explanation of what happens in each of these program lines.
 
 **Line 1 : Set Memory Location Constants and Sprite Pointers**
 
-Lines 1 is the first of 2 lines in the main initialization sequence.
+Lines 1 is the first of 2 lines that comprise the main initialization sequence.
 
 `q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1`
 
