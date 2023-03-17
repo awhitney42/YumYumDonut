@@ -69,7 +69,7 @@ As our BASIC program will never use that much of free memory, we can safely omit
 - pokev+39,1 : This sets the main sprite color of the panda sprite to be white.
 - gosub8:gosub8 : The calls the subroutine at line 8 two times. Each time this runs, it loads the shape data for the each of the two sprites.
 
-**Line 3 : Start of Main Loop - Call Sprite Movement Subroutines and Check for Sprite Collision**
+**Line 3 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position**
 
 Line 3 begins the main loop of the game. As the user plays, the program will jump here repeatedly until stopped by the user.
     
@@ -95,7 +95,7 @@ The last statement `f = peek(r) and 15` sets the variable **f** to be the result
 - 14 if the joystick is pushed up
 - 15 if the joystick is not pushed at all
  
-**Line 4 : Read Joystick Position and Calculate Sprite Movement Values** 
+**Line 4 : Calculate Sprite Movement Values** 
  
 `4 k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
 
