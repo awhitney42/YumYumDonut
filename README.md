@@ -237,7 +237,7 @@ Finally, the subroutine RETURNs to line 3.
 
 **The Random Jumping Donut**
 
-At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=rnd(1)*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
+At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=z*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
 
 Given these values of **j**, when sub 10 runs `peek(v + (j - INT(j / 2) * j))` this will PEEK the following locations:
 
