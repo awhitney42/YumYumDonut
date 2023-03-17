@@ -29,8 +29,8 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
 
     1 q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1
     2 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8
-    3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10
-    4 f=peek(r)and15:k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37
+    3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10:f=peek(r)and15
+    4 k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224
     6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51
     7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:z=rnd(1):goto3
@@ -73,7 +73,7 @@ As our BASIC program will never use that much of free memory, we can safely omit
 
 Line 3 begins the main loop of the game. As the user plays, the program will jump here repeatedly until stopped by the user.
     
-`3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10`
+`3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10:f=peek(r)and15`
 
 The first statement is `on k gosub 10, 10, 10, 10`. The **ON** keyword in Commodore BASIC 2 provides a way to jump to various sepcified program locations, either as a GOTO or a GOSUB based on an indexed variable. The ON keyword is used twice in this line and was a great way to save space in the control logic!
 
@@ -86,22 +86,22 @@ The next statement `on f gosub 9` will go to the subroutine at line 9 if the val
 Then `j=z*2+2` sets a value of **j** to be a random floating point number between approximately 2.0001 and 3.9999. You will see the use of **j** in just a bit.
 
 Next, `gosub10` is performed unconditionally. If you recall from above, GOSUB 10 is the subroutine that moves the sprites. This will be explained more when we cover line 10, but having this subroutine called unconditionally at this point with a random value of **j** allows for the donut to move around even when the panda remains stationary.
- 
-**Line 4 : Read Joystick Position and Calculate Sprite Movement Values** 
- 
-`4 f=peek(r)and15:k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
 
-Line 4 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 7.
-
-The first statement `f = peek(r) and 15` sets the variable **f** to be the result of a PEEK in location **r**, the address showing the current state of the joystick, with an AND operation using 15 as the second operand. The value of 15 for the second operand for AND produces the following results:
+The last statement `f = peek(r) and 15` sets the variable **f** to be the result of a PEEK in location **r**, the address showing the current state of the joystick, with an AND operation using 15 as the second operand. The value of 15 for the second operand for AND produces the following results:
 
 - 7 if the joystick is pushed right
 - 11 if the joystick is pushed left
 - 13 if the joystick is pushed down
 - 14 if the joystick is pushed up
 - 15 if the joystick is not pushed at all
+ 
+**Line 4 : Read Joystick Position and Calculate Sprite Movement Values** 
+ 
+`4 k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
 
-The next three statements in this line set some essential variables that are used in the sprite movement routine, which will be called in the next iteration of the main loop when line 3 is reached again. First the value of **k** is set, which if you recall will be used to perform an additional sprite movement at the start of line 3 if k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = (f - int(f / 5) * 5)` or **f** MODULUS 5:
+Line 4 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 7.
+
+The statements in this line set some essential variables that are used in the sprite movement routine, which will be called in the next iteration of the main loop when line 3 is reached again. First the value of **k** is set, which if you recall will be used to perform an additional sprite movement at the start of line 3 if k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = (f - int(f / 5) * 5)` or **f** MODULUS 5:
 
 **k**:
 - 11 MOD 5 = **1 (Left)**
