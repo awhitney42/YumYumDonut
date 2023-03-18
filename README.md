@@ -30,7 +30,7 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
     1 q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1
     2 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8
     3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10:f=peek(r)and15
-    4 k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37
+    4 k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(int(k/2)-int(int(k/2)/2)*2)-1)*z*37
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224
     6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51
     7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:z=rnd(1):goto3
@@ -119,18 +119,18 @@ The next statement `j = int((k - 1) / 2)` sets **j** to the following values bas
 - INT((3 - 1) / 2) = **1 (Down)**
 - INT((4 - 1) / 2) = **1 (Up)**
 
-The final statement in this line `d = (2 * (k - int(k / 2) * 2) - 1) * z * 37` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * 37`. If you recall from line 3, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **37**. Using 37 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 10. 
+The final statement in this line `d=(2 * (int(k / 2) - int(int(k / 2) / 2) * 2) - 1) * z * 37` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * 37`. As you will see in line 7, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **37**. Using 37 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 10. 
 
 So **d** as derived from **k**, before the random jump value is applied, will be the following values:
-- (2 * (0 MOD 2) - 1) = **-1 (No Movement)**
-- (2 * (1 MOD 2) - 1) = **1 (Left)**
-- (2 * (2 MOD 2) - 1) = **-1 (Right)**
-- (2 * (3 MOD 2) - 1) = **1 (Down)**
-- (2 * (4 MOD 2) - 1) = **-1 (Up)**
+- (2 * (INT(0/2) MOD 2) - 1) = **-1 (No Movement)**
+- (2 * (INT(1/2) MOD 2) - 1) = **-1 (Left)**
+- (2 * (INT(2/2) MOD 2) - 1) = **1 (Right)**
+- (2 * (INT(3/2) MOD 2) - 1) = **1 (Down)**
+- (2 * (INT(4/2) MOD 2) - 1) = **-1 (Up)**
 
-As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or decrease its X/Y coordinates based on **d**, moving it in the correct direction. When you play Yum Yum Donut, you will see that up and down do indeed move in the correct direction on the screen, but you may notice that left and right are reversed from the direction they should move. Fortunately, the user's brain adapts to this control reversal in the horizontal direction, and it doesn't really affect the gameplay.
+As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or decrease its X/Y coordinates based on **d**, moving it in the correct direction.
 
-If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (k - int(k / 2) * 2) - 1) * z * 37` or `1 * z * 37`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and 37, providing the random jump distance for the donut. 
+If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * 37` or `-1 * z * 37`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -37, providing the random jump distance for the donut. 
 
 **Line 5 : Sprite Shape Data** 
 
