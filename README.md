@@ -30,13 +30,13 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
     1 q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1:print"{clr}don";
     2 print"ut!":pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8
     3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10:f=peek(r)and15
-    4 k=f-int(f/5)*5:j=int((k-1)/2):d=(2*(int(k/2)-int(int(k/2)/2)*2)-1)*z*17:c=j/2
+    4 k=f-int(f/5)*5:j=int((k-1)/2):d=(2*(int(k/2)-int(int(k/2)/2)*2)-1)*z*17
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2
     6 data 174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51:b=h*z
     7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:z=rnd(1):goto3
     8 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:return
     9 print"{clr}{home}yum! ";h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,9:pokeq+1,24:pokeq,155
-    10 x=peek(v+(j-int(j/2)*2))+d+int(c)*b/2:x=x-int((x)/239)*239:pokev+j,x:return
+    10 c=j/2:x=peek(v+(j-int(j/2)*2))+d+int(c)*b:x=x-int((x)/239)*239:pokev+j,x:return
 
 Here is an explanation of what happens in each of these program lines.
 
@@ -97,7 +97,7 @@ The last statement `f = peek(r) and 15` sets the variable **f** to be the result
  
 **Line 4 : Calculate Sprite Movement Values** 
  
-`4 k=(f-int(f/5)*5):j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*37`
+`4 k=f-int(f/5)*5:j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*17`
 
 Line 4 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 7.
 
@@ -198,7 +198,7 @@ If you have eagle eyes, you may have noticed that line 9 doesn't end with a RETU
 
 All of the sprite movement is performed by the 10th and final line of the program. This subroutine is called by line 3 at least once per program loop, and the **j** and **d** values are used to specify which sprite to move, which direction to move it, and by what amount.
 
-`10 x=peek(v+(j-int(j/2)*2))+d:x=x-int((x)/239)*239:pokev+j,x:return`
+`10 c=j/2:x=peek(v+(j-int(j/2)*2))+d+int(c)*b:x=x-int((x)/239)*239:pokev+j,x:return`
 
 This line still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when the sub is called and then how they affect the sprite movement. The explanation is very long, but this is with the goal of making sure it is understood how this one line (interacting with lines 3 and 4 where **j** and **d** are calculated) can control all sprite movement in the entire game!
 
