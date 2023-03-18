@@ -27,10 +27,10 @@ The BASIC 10Liner Contest is an extreme challenge of creating an entire video ga
 
 Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
 
-    1 q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1:print"{clr}don";
+    1 q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:h=1:y=0:print"{clr}don";
     2 print"ut!":pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8
     3 onkgosub10,10,10,10:f=peek(v+30)and1:onfgosub9:j=z*2+2:gosub10:f=peek(r)and15
-    4 k=f-int(f/5)*5:j=int((k-1)/2):d=(2*(int(k/2)-int(int(k/2)/2)*2)-1)*z*17
+    4 k=f-int(f/5)*5:j=int((k-1)/2):d=(2*(int(k/2)-int(int(k/2)/2)*2)-1)*z*29
     5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2
     6 data 174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,0,12,0,0,63,0,0,51:b=h*z
     7 data 0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0,0:pokeq+4,0:z=rnd(1):goto3
@@ -44,7 +44,7 @@ Here is an explanation of what happens in each of these program lines.
 
 Lines 1 is the first of 2 lines that comprise the main initialization sequence.
 
-`q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:y=0:h=1`
+`q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:h=1:y=0:print"{clr}don"`
 
 - q=54272 : **q** is the memory address for the SID (Sound Interface Device) chip. Referencing **q** later will allow setting values in the address space that controls sound effects for the game.
 - r=56320 : **r** is the memory address for reading the joystick in port2. Referencing **r** later will allow the program to detect joystick input.
@@ -61,7 +61,7 @@ As our BASIC program will never use that much of free memory, we can safely omit
 
 **Line 2 : Set Sprite Properties and Sprite Data**
 
-`2 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8`
+`2 print"ut!":pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:gosub8:gosub8`
 
 - pokev,50:pokev+1,80 : If you recall, **v** controls the sprites. These two lines set the X and Y position of Sprite 0 (panda). The position of Sprite 1 (donut) will be later set to random coordinates. The X and Y values of 50 and 80 respectively get the panda sprite visible and positioned on the screen.
 - pokev+21,3 : This is a bitmask byte to enable (make visible) the sprites. Setting this to a value of 3 (2+1) enables Sprites 0 and 1.
@@ -97,7 +97,7 @@ The last statement `f = peek(r) and 15` sets the variable **f** to be the result
  
 **Line 4 : Calculate Sprite Movement Values** 
  
-`4 k=f-int(f/5)*5:j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*17`
+`4 k=f-int(f/5)*5:j=int((k-1)/2):d=(2*(k-int(k/2)*2)-1)*z*29`
 
 Line 4 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 7.
 
@@ -130,17 +130,17 @@ So **d** as derived from **k**, before the random jump value is applied, will be
 
 As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or decrease its X/Y coordinates based on **d**, moving it in the correct direction.
 
-If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * 37` or `-1 * z * 37`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -37, providing the random jump distance for the donut. 
+If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * 29` or `-1 * z * 29`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -29, providing the random jump distance for the donut. 
 
 **Line 5 : Sprite Shape Data** 
 
 Lines 5, 6, and 7 hold the sprite data that defines the shapes of the panda and donut sprites. Each sprite has the same amount of shape data (33 bytes), so that the subroutine at line 8 that POKEs (draws) the sprite into memory could be run without needing to specify the sprite size and thereby saving space in this 10-line program.
 
-`5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224`
+`5 data 3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2`
 
 **Line 6 : More Sprite Shape Data**
 
-`6 data 2,174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51`
+`6 data 174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51:b=h*z`
 
 **Line 7 : More Sprite Shape Data, Reset Sound Effects, and Keep Looping**
 
