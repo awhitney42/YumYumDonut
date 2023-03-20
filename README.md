@@ -40,11 +40,11 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
 
 Here is an explanation of what happens in each of these program lines.
 
-**Line 1 : Set Memory Location Constants and Sprite Pointers**
+**Line 0 : Set Memory Location Constants and Sprite Pointers**
 
-Lines 1 is the first of 2 lines that comprise the main initialization sequence.
+Lines 0 is the first of 2 lines that comprise the main initialization sequence.
 
-`q=54272:r=56320:s=12288:v=53248:poke2040,192:poke2041,193:h=1:y=0:print"{clr}don"`
+`0 w=192:s=w*64:v=53248:poke2040,w:poke2041,w+1:t$="{clr}{home}{wht}donut! yum":ti$="000000"`
 
 - q=54272 : **q** is the memory address for the SID (Sound Interface Device) chip. Referencing **q** later will allow setting values in the address space that controls sound effects for the game.
 - r=56320 : **r** is the memory address for reading the joystick in port2. Referencing **r** later will allow the program to detect joystick input.
