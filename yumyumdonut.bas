@@ -6,5 +6,5 @@
 5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51,0,0,97
 6 data128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:j=int((k-1)/2):z=rnd(1):goto2
 7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:w=24
-8 printt$h:h=h+1:pokeq+5,6:pokeq+4,17:pokeq+24,15:pokeq+1,g:pokeq+4,0:g=w+ti/300
+8 printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g:g=w+ti/300
 9 c=j/2:x=peek(v+(j-int(c)*2))+d+(int(c)*b):x=x-int(x/239)*239:pokev+j,x:return
