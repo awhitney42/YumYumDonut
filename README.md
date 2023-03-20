@@ -67,6 +67,8 @@ As our BASIC program will never use that much dynamic free memory, we can safely
 - pokev+21,3 : This is a bitmask byte to enable (make visible) the sprites. Setting this to a value of 3 (2+1) enables Sprites 0 and 1.
 - pokev+28,1 : This turns on multi-color mode for the sprites. Setting this to a value of 1 enables multi-color mode for only Sprite 0, allowing the panda to have the black and white color pattern.
 - pokev+39,1 : This sets the main sprite color of the panda sprite to be white.
+- q=54272 : **q** is the memory address for controlling the SID (Sound Interface Device). Referencing **q** later will allow for controlling the game's sound effects.
+- y = 0 : **y** will be the counter used for populating the sprite data in line 7.
 - gosub7:gosub7 : The calls the subroutine at line 7 two times. Each time this runs, it loads the shape data for the each of the two sprites.
 
 **Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position**
@@ -160,17 +162,19 @@ The last statement is the final statement in the program's main loop. `goto 2` d
 
 **Line 7 : SUBROUTINE - Read Sprite Data and Poke It Into Memory**
 
-Line 8 is the first of the three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that holds the memory address of the start of Sprite 0.
+Line 7 is the first of three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that holds the memory address of the start of Sprite 0.
 
 `7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:w=24`
 
-This subroutine has two loops. The first FOR loop starts at the value in **y** (which is initially set to 0 on line 1) and the loops each iteration by 1 until it reaches y + 32, in order to load 33 bytes of data into each sprite data location in memory. The loop iterator index **x** is added to the sprite memory location **s** (memory location 12288) to specify the location to POKE the sprite data byte into memory. So, when this subroutine runs the first time, this first loop POKEs data into 12288+0 to 12288+32 to draw Sprite 0.
+This subroutine has two loops. The first FOR loop starts at the value in **y** (which is initially set to 0 on line 1) and then loops each iteration by 1 until it reaches y + 32, in order to load 33 bytes of data into each sprite data location in memory. The loop iterator index **x** is added to the sprite memory location **s** (memory location 12288) to specify where to POKE the sprite data byte into memory. So when this subroutine runs the first time, the first loop POKEs data into 12288+0 to 12288+32 to draw Sprite 0.
 
-During each iteration of this loop, it READs the sprite data from the DATA bytes contained in lines 5 through 7.
+During each iteration of this loop, it READs the sprite data from the DATA bytes contained in lines 4 through 6.
 
-The second FOR loop in this subroutine writes zeroes to the remaining sprite data memory, to make sure that is cleared out and the sprite shape is drawn as intended. It loops from **z + 1** (**z** as you may recall is **y + 32**) until **z + 31** to reach the 64th and final sprite data byte. So, the first time this subroutine runs, this second loop POKEs a 0 byte into 12288+33 to 12288+63 to finish drawing Sprite 0.
+The second FOR loop in this subroutine writes zeroes to the remaining sprite data memory to make sure that is cleared out and the sprite shape is drawn as intended. It loops from **z + 1** (**z** as you may recall is **y + 32**) until **z + 31** to reach the 64th and final sprite data byte. So, the first time this subroutine runs, the second FOR loop POKEs a 0 byte into 12288+33 to 12288+63 to finish drawing Sprite 0.
 
-The final statement in this sub before RETURNing is `y=x`, which after the first run, it sets the **y** value to 63. This value will POKE the sprite data into 12288+63 to 12288+127 next time when drawing Sprite 1.
+The next statement in this sub is `y=x`. After the first run, this sets the **y** value to 63. This value will POKE the sprite data into 12288+63 to 12288+127 when this subroutine is called a second time to draw Sprite 1.
+
+The final statement in this sub is `w=24`. This sets the baseline sound effect frequency value used in SUB 8.
 
 **Line 8 : SUBROUTINE - Increment Score and Play Sound Effects**
 
@@ -178,25 +182,27 @@ When the sprites collide, subroutine 8 is called. This increments the Yum score 
 
 `8 printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g:g=w+ti/300`
 
-The `print"{clr}{home}yum! ";h` statement prints the current YUM! score to the top of the screen.
+The `print t$ h` statement prints the scoreboard message in **t$** followed by the current YUM! score **h** to the top of the screen.
 
 The `h=h+1` statement obviously increments the score counter.
 
-The remaining statements that poke to the memory location at **q** controls the SID sound chip to play the sound effects.
+The remaining statements that POKE to t**q** control the SID sound chip in order to play the sound effects.
 
-`pokeq+5,6` sets the attack and decay values for sound Voice 1 to 6 (attack = 0, decay = 6)
+`pokeq+4,0` resets the SID chip to ready it for the sound
 
 `pokeq+4,17` selects the triangle waveform
 
-`pokeq+24,9` sets the volume to 9 (out of a max of 15).
+`pokeq+24,15` sets the volume to 15 (max volume).
 
-`pokeq+1,24` sets the high frequency of Voice 1 to 24.
+`pokeq+5,6` sets the attack and decay values to 6 (attack = 0, decay = 6)
 
-`pokeq,155` sets the low frequency of Voice 1 to 155.
+`pokeq+1,g` sets the high frequency (pitch) to the value stored in **g**.
+
+`g = w + ti / 300` sets the sound frequency value for next time. The value of **g** is set to the constant **w** (a value of 24 set in line 7) plus the current system timer value divided by 300. The result is that the pitch of the sound effect increases in frequency every few seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
 
 This results in a very arcade-like "Boop!" sound every time the panda bites the donut, adding significantly to the gameplay experience!
 
-If you have eagle eyes, you may have noticed that line 9 doesn't end with a RETURN even though it's a subroutine. Omitting the RETURN here saves space. So, at the conclusion of line 9, the program continues along and runs the subroutine at line 10. The explanation of line 10 follows below, but rest assured that running line 10 immediately after running line 9 actually has no effect on the sprites, because line 10 would already have been called immediately before a sprite collision, and the input values of **j** and **d** that control the sprite movement will not have changed since it was last called just prior to calling sub 9.
+If you have eagle eyes, you may have noticed that lines 7 and 8 don't end with a RETURN even though they are subroutines. Omitting the RETURNs saves space. So, at the conclusion of both subroutines 7 and 8, the program continues along and runs the subsequent subroutines. The program is structured such that that running line 8 and/or line 9 immediately after running the previous line(s) has no negative effect on the program. For example, in the case of running line 9 immediately after calling line 8 due to a sprite collision, this will have the effect of simply moving the donut sprite after the collision.
 
 **Line 9 SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount**
 
