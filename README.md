@@ -1,3 +1,5 @@
+<picture><img src="https://adamwhitney.net/static/images/YumYumDonut-GameCoverArt.jpg" alt="Cover Art" width="200" height="320" style="display: block;margin-left: auto;margin-right: auto;width: 50%;"></picture>
+
 # Yum Yum Donut
 ## Yum Yum Donut : Commodore 64 Game for the BASIC 10Liner Contest
 **©2023 Adam Whitney**
