@@ -40,6 +40,7 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
 
 Here is an explanation of what happens in each of these program lines.
 
+
 **Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Clock**
 
 Lines 0 is the first of 2 lines that comprise the main initialization sequence.
@@ -59,6 +60,7 @@ Lines 0 is the first of 2 lines that comprise the main initialization sequence.
 
 As our BASIC program will never use that much dynamic free memory, we can safely omit these statements to save space.
 
+
 **Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data**
 
 `1 pokev,w/2:pokev+1,w:pokev+21,3:pokev+28,1:pokev+39,1:y=0:q=54272:gosub7:gosub7`
@@ -70,6 +72,7 @@ As our BASIC program will never use that much dynamic free memory, we can safely
 - q=54272 : **q** is the memory address for controlling the SID (Sound Interface Device). Referencing **q** later will allow for controlling the game's sound effects.
 - y = 0 : **y** will be the counter used for populating the sprite data in line 7.
 - gosub7:gosub7 : The calls the subroutine at line 7 two times. Each time this runs, it loads the shape data for the each of the two sprites.
+
 
 **Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position**
 
@@ -94,6 +97,7 @@ The last statement `f=peek(56320)and15` sets the variable **f** to be the result
 - 13 if the joystick is pushed down
 - 14 if the joystick is pushed up
 - 15 if the joystick is not pushed at all
+ 
  
 **Line 3 : Calculate Sprite Movement Values and Check Game Timer** 
  
@@ -131,15 +135,18 @@ The next statement is `b = h * z`. If you recall, **z** is a random floating poi
 
 The final statement in this line `if ti > q / 7 then end` checks the built-in system timer variable TI to see if it exceeds approximately 120 seconds. If so, then the game will be over. This gives the panda only 2 minutes per gameplay to eat the donut!
 
+
 **Line 4 : Sprite Shape Data** 
 
 Lines 4, 5, and 6 hold the sprite data that defines the shapes of the panda and donut sprites. Each sprite has the same amount of shape data (33 bytes), so that the subroutine at line 7 that POKEs (draws) the sprite into memory could be run without needing to specify the sprite size and thereby saving space in this 10-line program.
 
 `4 data3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2`
 
+
 **Line 5 : More Sprite Shape Data**
 
 `5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51,0,0,97`
+
 
 **Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, Get New Random Number, and Keep Looping**
 
@@ -160,6 +167,7 @@ After the sprite data in line 6, the next statement `j = int((k - 1) / 2)` sets 
 
 The last statement is the final statement in the program's main loop. `goto 2` does just that! It jumps to line 2, starting the main loop all over again!
 
+
 **Line 7 : SUBROUTINE - Read Sprite Data and Poke It Into Memory**
 
 Line 7 is the first of three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that holds the memory address of the start of Sprite 0.
@@ -175,6 +183,7 @@ The second FOR loop in this subroutine writes zeroes to the remaining sprite dat
 The next statement in this sub is `y=x`. After the first run, this sets the **y** value to 63. This value will POKE the sprite data into 12288+63 to 12288+127 when this subroutine is called a second time to draw Sprite 1.
 
 The final statement in this sub is `w=24`. This sets the baseline sound effect frequency value used in SUB 8.
+
 
 **Line 8 : SUBROUTINE - Increment Score and Play Sound Effects**
 
