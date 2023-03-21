@@ -43,7 +43,7 @@ Here is an explanation of what happens in each of these program lines.
 
 #### Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Clock ####
 
-Lines 0 is the first of 2 lines that comprise the main initialization sequence.
+Lines 0 is the first of two lines that comprise the main initialization sequence.
 
 `0 w=192:s=w*64:v=53248:poke2040,w:poke2041,w+1:t$="{clr}{home}{wht}donut! yum":ti$="000000"`
 
