@@ -204,15 +204,21 @@ This results in a very arcade-like "Boop!" sound every time the panda bites the 
 
 If you have eagle eyes, you may have noticed that lines 7 and 8 don't end with a RETURN even though they are subroutines. Omitting the RETURNs saves space. So, at the conclusion of both subroutines 7 and 8, the program continues along and runs the subsequent subroutines. The program is structured such that that running line 8 and/or line 9 immediately after running the previous line(s) has no negative effect on the program. For example, in the case of running line 9 immediately after calling line 8 due to a sprite collision, this will have the effect of simply moving the donut sprite after the collision.
 
+
 **Line 9 SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount**
 
-All of the sprite movement is performed by the tenth and final line of the program. This subroutine is called by line 2 at least once per program loop, and the **j** and **d** values are used to specify which sprite to move, which direction to move it, and by what amount.
+All of the sprite movement is performed by the tenth and final line of the program. This subroutine is called by line 2 at least once per program loop, and the **j**, **d**, and **b** values are used to specify which sprite to move, which direction to move it, and by what amount.
 
 `9 c=int(j/2):x=peek(v+(j-c*2))+d+(c*b):x=x-int(x/239)*239:pokev+j,x:return`
 
-This line still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when the sub is called and then how they affect the sprite movement. The explanation is very long, but this is with the goal of making sure it is understood how this one line (interacting with lines 3 and 4 where **j** and **d** are calculated) can control all sprite movement in the entire game!
+This line still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when the sub is called and how they affect the sprite movement. The explanation here is very long, but the goal is to sure it is understood how this one line (interacting with lines 2, 3, and 6 where **j** and **d** are calculated) can control all sprite movement in the entire game!
 
-The first statement `x = peek(v + (j - INT(j / 2) * j)) + d` calculates the coordinate to use for moving the sprite.
+The first statement `c=int(j/2)` calculates a value of **c** as follows:
+
+- **c** = **0** if **j** is 0 or 1
+- **c** = **1** if **j** is 1 or 2
+
+The next statement `x = peek( v + (j - c * 2)) + d + (c * b)` calculates the coordinate to use for moving the sprite.
 
 The coordinates of the current position of both sprites are always as follows:
 
@@ -223,7 +229,7 @@ The coordinates of the current position of both sprites are always as follows:
 
 **Moving the Panda Based on Joystick Push**
 
-If sub 10 gets called from line 3 when the joystick has been pushed, the value of **j** will be based on the joystick position:
+If sub 9 gets called from line 2 when the joystick has been pushed, the value of **j** will be based on the joystick position:
 
 - **j** = INT((**1** - 1) / 2) = **0** (left)
 - **j** = INT((**2** - 1) / 2) = **0** (right)
@@ -235,32 +241,38 @@ So, using this value of **j**, the following coordinates will be PEEKed:
 - j = 0 : PEEK(v + 0) : X coordinate of Sprite 0 (panda) : joystick was pushed left or right
 - j = 1 : PEEK(v + 1) : Y coordinate of Sprite 0 (panda) : joystick was pushed up or down
 
-At the end of the expression in this statement `x = peek(v + (j - INT(j / 2) * j)) + d`, the value of **d** is added to the coordinate value retrieved by the PEEK. If you recall from line 4, **d** will be either a positive or negative value (to move up or left for a negative value, down or right for a positive one) plus some random fractional amount of the distance constant of 37.
+In the middle of the expression in this statement `x = peek( v + (j - c * 2)) + d + (c * b)`, the value of **d** is added to the coordinate value retrieved by the PEEK. If you recall from line 4, **d** will be either a positive or negative value (to move up or left for a negative value, down or right for a positive one).
 
-So at the end of this statement, the **x** value will be a coordinate that will move the sprite either up or down by a certain amount if the joystick was pushed in the up or down directions, or left or right by that amount if the joystick was pushed in those directions.
+At the end of the expression, `(c * b)` is added to the coordination. This value will only be non-zero if the donut sprite is selected. So, in the case covered here for a joystick push and panda movement, this will be zero.
 
-The next statement `x = x - int((x) /239) * 239` or `x = x MOD 239` adjusts the destination coordinate using the modulus operator to make sure it doesn't land outside the bounds of the screen coordinates. This allows the sprite to enter the far side of the screen, Pac Man style, if it exits the other side and thereby avoids crashing the program.
+When completed, this statement produces an **x** value that will be a coordinate moving the panda sprite either up or down by a certain amount if the joystick was pushed in the up or down directions, or left or right by that amount if the joystick was pushed in those directions.
+
+The next statement `x = x - int((x) /239) * 239` or `x = x MOD 239` adjusts the destination coordinate using the modulo operator to make sure it doesn't land outside the bounds of the screen coordinates. This allows the sprite to enter the far side of the screen, PAC-MAN style, if it exits the other side and thereby avoids crashing the program.
 
 The next statement `poke v + j, x` simply moves the sprite to the **x** coordinate using the **j** index! As we just discussed, **j** will be 0 or 1 when this sub is called after the joystick is moved, so this always moves the panda (Sprite 0) whenever the joystick is moved, allowing the user to control only the panda!
 
-Finally, the subroutine RETURNs to line 3.
+Finally, the subroutine RETURNs to line 2.
 
 **The Random Jumping Donut**
 
 At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=z*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
 
-Given these values of **j**, when sub 10 runs `peek(v + (j - INT(j / 2) * j))` this will PEEK the following locations:
+Given these values of **j**, when sub 9 runs `x = peek( v + (j - c * 2)) + d + (c * b)` this will PEEK the following locations:
 
 - j >=2 and j < 3 : PEEK(v + 0) : **X** coordinate of Sprite 0 (**panda**)
 - j >=2 and j < 4 : PEEK(v + 1) : **Y** coordinate of Sprite 0 (**panda**)
 
 (You will see that PEEK and POKE both accept the input of `v + j` in line 10, where **j** is a floating point number, so they must simply run INT on this value internally.)
 
-So, in the expression `x = peek(v + (j - INT(j / 2) * j)) + d` the value from the PEEK will be based on the position of the panda.
+So, in the expression `x = peek( v + (j - c * 2)) + d + (c * b)` the value from the PEEK will be based on the position of the panda.
 
-With there having been no joystick movement, **d** will always be a negative random number between 0 and 37 based on the calculation in line 4. The final value of **x** from this statement therefore will be the current X or Y coordinate of the panda minus some random number between 0 and 37. Therefore the donut will always move some random amount relative to the current position of the panda.
+With there having been no joystick movement, **d** will always be a negative random number between 0 and 39 based on the calculation in line 3.
 
-Now you can understand the sprite movement for the game. When line 10 runs, either the panda is moved in a controlled direction specified by the joystick push or the donut makes a random jump!
+At the end of the expression `(c * b)` is added to the coordination in the case where the donut is moving. If you recall, **c** will be 1 when the donut sprite is selected and **b** is a random value that increases in magnitude as the game score increases. This results in the **x** coordinate that is on average farther away from the panda as the score increases, making it progressively harder to catch!
+
+So, the final value of **x** from this statement therefore will be the current X or Y coordinate of the panda plus some random distance. Therefore the donut will always move some random amount relative to the current position of the panda.
+
+Now you can understand the sprite movement for the game. When line 9 runs, either the panda is moved in a controlled direction specified by the joystick push or the donut makes a random jump!
 
 ### BASIC 10Liner Contest Rules
 
