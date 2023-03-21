@@ -10,7 +10,7 @@ Yum Yum Donut is my first video game creation! I made it as an entry into the [B
 
 ### Loading the Game
 
-Drag yumyumdonut.prg to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that it is configured for a keyboard keymap that works for you.
+Drag YUMYUMDONUT.PRG to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that it's configured for a keyboard keymap that works for you.
 
 If you have native hardware, copy the D64 image to a floppy disk or load it via a device such as an SD2IEC. Assuming your floppy or SD2IEC drive is device #8, then issue the following commands:
 
@@ -56,7 +56,7 @@ Lines 0 is the first of two lines that comprise the main initialization sequence
 - t$="{clr}{home}{wht}donut! yum" : **t$** is the message that will be printed on the game scoreboard at the top of the screen.
 - ti$="000000" : This sets the system clock to 00:00:00 to start the game's countdown timer.
 
-*Note:* All the books would correctly have you add two more statements to the game initialization code:
+*Note:* Books on this topic would correctly encourage you add two more statements to the game initialization code:
 
 `poke52,48:poke56,48` : These two lines move the BASIC end-of-strings and end-of-memory pointers to protect the sprite data at address 12288
 
@@ -82,17 +82,17 @@ Line 2 begins the main loop of the game. As the user plays, the program will jum
     
 `2 onkgosub9,9,9,9:j=z*2+2:f=peek(v+30)and1:onf+1gosub9,8:f=peek(56320)and15`
 
-The first statement in this line uses the **ON** keyword in Commodore BASIC 2 provides a way to jump to various sepcified program locations, either as a GOTO or a GOSUB based on an indexed variable. The ON keyword is used twice in this line and was a great way to save space in the control logic!
+The first statement in this line uses the **ON** keyword in Commodore BASIC V2 provides a way to jump to various sepcified program locations, either as a GOTO or a GOSUB based on an indexed variable. The ON keyword is used twice in this line and was a great way to save space in the control logic!
 
-The `on k gosub 9, 9, 9, 9` statement evaluates the value of **k**, and then performs a GOSUB to line 9 if the value of **k** is 1, 2, 3, or 4. If **k** is less than 1 or more than 4, then no jump will be taken. We will later see that **k** will be set based on the state of the joystick, and the subroutine at line 9 controls the sprite movement appropriately for given values of **k** as well as other variables **d** and **j**, whose values will be calcuated based on **k** prior to calling the subroutine.
+The `on k gosub 9, 9, 9, 9` statement evaluates the value of **k**, and then performs a GOSUB to line 9 if the value of **k** is 1, 2, 3, or 4. If **k** is less than 1 or more than 4, then no jump will be taken. We will later see that **k** will be set based on the state of the joystick, and the subroutine at line 9 controls the sprite movement appropriately for given values of **k**.
 
-Then `j=z*2+2` sets a value of **j** to be a random floating point number between approximately 2.0001 and 3.9999. You will see the use of **j** in just a bit.
+Then `j = z * 2 + 2` statement sets a value of **j** to be a random floating point number between approximately 2.0001 and 3.9999. You will see the use of **j** in just a bit.
 
-With the `f= peek(v + 30) and 1` statement, **v+30** is the memory location that indicates a sprite collision. The **f** variable is the result of a **PEEK** at the value in that location with a boolean **AND** operation with an operand of 1. Using an operand of 1 for this AND checks for any sprite collision with Sprite 0 (panda), where a resulting value of 1 indicates a collision with another sprite (the donut).
+With the `f = peek(v + 30) and 1` statement, **v+30** is the memory location that indicates a sprite collision. The **f** variable is the result of a **PEEK** at the value in that location with an **AND** operation with value of 1 as the second operand. Using an operand of 1 for this AND operation checks for any sprite collision with Sprite 0 (panda), where a resulting value of 1 indicates a collision with another sprite (the donut).
 
-The next statement `onf+1gosub9,8` will go to the subroutine at line 9 if the value of **f** is 0 or the subroutine at line 8 if the value is 1. In other words, if the sprites did not collide then GOSUB 9 will be performed, which will cause the donut to move at this point. If the sprites did collide, however, then GOSUB 8 will be performed. As you can probably guess, subroutine 8 contains the actions for handling when the panda successfully takes a bite of the donut!
+The next statement `on f + 1 gosub 9, 8` will GOSUB 9 if the value of **f** is 0 or GOSUB 8 if the value of **f** is 1. In other words, if there was no sprite collision, then GOSUB 9 will be performed and the donut to move. If there was a sprite collision, however, then GOSUB 8 will be performed. As you can probably guess subroutine 8 handles the action of taking a bite of the donut!
 
-The last statement `f=peek(56320)and15` sets the variable **f** to be the result of a PEEK in location **56320**, the address showing the current state of the joystick, with an AND operation using 15 as the second operand. The value of 15 for the second operand for AND produces the following results:
+The last statement `f = peek(56320) and 15` sets the variable **f** to be the result of a PEEK in location **56320** (the address showing the current state of the joystick) with an AND operation using 15 as the second operand. The value of 15 for the operand produces the following results:
 
 - 7 if the joystick is pushed right
 - 11 if the joystick is pushed left
@@ -105,11 +105,11 @@ The last statement `f=peek(56320)and15` sets the variable **f** to be the result
  
 `3 l=39:k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*l:b=h*z:ifti>q/7thenend`
 
-Line 4 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 6.
+Line 3 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 6.
 
-The statements in this line set some essential variables that are used in the sprite movement routine, which will be called in the next iteration of the main loop when line 2 is reached again.
+The statements in this line set some essential variables that are used in the sprite movement routine on line 9, which will be called in the next iteration of the main loop when line 2 is reached again.
 
-First, a constant **l** is set to 39. This contant is used in the sprite movement calculation.
+First, a constant **l** is set to 39 with `l=39`. This constant is used in the sprite movement calculation.
 
 Next the value of **k** is set, which if you recall will be used to perform a sprite movement at the start of line 2 if k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = f - int(f / 5) * 5` or **f** MODULO 5:
 
@@ -120,7 +120,7 @@ Next the value of **k** is set, which if you recall will be used to perform a sp
 - 14 MOD 5 = **4 (Up)**
 - 15 MOD 5 = *0 (No Direction Pushed)*
 
-The next statement in this line `d=(2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * l` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in line 6, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **l** or 39. Using 39 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
+The next statement in this line `d = (2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * l` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in line 6, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **l** or 39. Using 39 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
 
 So **d** as derived from **k**, before the random jump value is applied, will be the following values:
 - (2 * (INT(0/2) - INT(0/4) * 2) - 1) = **-1 (No Movement)**
@@ -211,9 +211,9 @@ The remaining statements that POKE to t**q** control the SID sound chip in order
 
 `g = w + ti / 300` sets the sound frequency value for next time. The value of **g** is set to the constant **w** (a value of 24 set in line 7) plus the current system timer value divided by 300. The result is that the pitch of the sound effect increases in frequency every few seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
 
-This results in a very arcade-like "Boop!" sound every time the panda bites the donut, adding significantly to the gameplay experience!
+The sound effect produced is a very arcade-like "Boop!" when the panda takes a bite, adding significantly to the gameplay experience!
 
-If you have eagle eyes, you may have noticed that lines 7 and 8 don't end with a RETURN even though they are subroutines. Omitting the RETURNs saves space. So, at the conclusion of both subroutines 7 and 8, the program continues along and runs the subsequent subroutines. The program is structured such that that running line 8 and/or line 9 immediately after running the previous line(s) has no negative effect on the program. For example, in the case of running line 9 immediately after calling line 8 due to a sprite collision, this will have the effect of simply moving the donut sprite after the collision.
+Now, if you have eagle eyes then you may have noticed that lines 7 and 8 don't end with a RETURN even though they are subroutines. Omitting those RETURNs saves space. So, at the conclusion of both subroutines 7 and 8, the program continues along and runs the subsequent subroutines. The program is structured such that that running line 8 and/or line 9 immediately after running the previous line(s) has no negative effect on the program. For example, in the case of running line 9 immediately after calling line 8 due to a sprite collision, this will have the effect of simply moving the donut sprite after the collision.
 
 
 #### Line 9 SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount ####
@@ -222,7 +222,7 @@ All of the sprite movement is performed by the tenth and final line of the progr
 
 `9 c=int(j/2):x=peek(v+(j-c*2))+d+(c*b):x=x-int(x/239)*239:pokev+j,x:return`
 
-This line still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when the sub is called and how they affect the sprite movement. The explanation here is very long, but the goal is to sure it is understood how this one line (interacting with lines 2, 3, and 6 where **j** and **d** are calculated) can control all sprite movement in the entire game!
+This still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when sub 9 is called and how they affect the sprite movement. The explanation here is very long, but the goal is to sure it is understood how this one line (interacting with lines 2, 3, and 6 where **j** and **d** are calculated) can control all sprite movement in the entire game!
 
 The first statement `c=int(j/2)` calculates a value of **c** as follows:
 
@@ -240,7 +240,7 @@ The coordinates of the current position of both sprites are always as follows:
 
 **Moving the Panda Based on Joystick Push**
 
-If sub 9 gets called from line 2 when the joystick has been pushed, the value of **j** will be based on the joystick position:
+If sub 9 gets called when the joystick has been pushed, the value of **j** will be based on the joystick position:
 
 - **j** = INT((**1** - 1) / 2) = **0** (left)
 - **j** = INT((**2** - 1) / 2) = **0** (right)
@@ -287,7 +287,7 @@ Now you can understand the sprite movement for the game. When line 9 runs, eithe
 
 ### BASIC 10Liner Contest Rules
 
-This is an entry in the Category "PUR-80":
+Yum Yum Donut is my entry to the BASIC 10Liner Contest in the Category "PUR-80":
 
 > Program a game in 10 lines (max 80 characters per logical line, abbreviations are allowed).
 >
