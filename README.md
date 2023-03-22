@@ -4,7 +4,7 @@
 ## Commodore 64 Game
 
 - **By Adam Whitney (Copyright 2023)**
-- **2023 BASIC 10Liner Contest Entry**
+- **[2023 BASIC 10Liner Contest Entry](https://bunsen.itch.io/)**
 - **PUR-80 Category**
 - **Written for Commodore 64 BASIC V2**
 - **[YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut)**
@@ -75,7 +75,7 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
   - **j=z*2+2** : Set Random Donut Movement Axis
   - **f=peek(v+30) and 1** : Check for Sprite Collision
   - **on f+1 gosub 9,8** : If No Collision Then Call Sprite Movement Subroutine 9 ; If Collision then Call Scoreboard Subroutine 8
-  - **f=peek(56320) and 15** Check for Joystick Push
+  - **f=peek(56320) and 15** : Check for Joystick Push
 - **Line 3 : Calculate Sprite Movement Values and Check Game Timer**
   -  **k=f-int(f/5) * 5** : Determine Joystick Direction
   -  **d=(2 * (int(k/2) - int(k/4) * 2) - 1) * z * 33** : Calculate Sprite Movement Direction and Amount
