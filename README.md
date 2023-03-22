@@ -2,10 +2,10 @@
 
 # Yum Yum Donut
 
-**©2023 Adam Whitney**
-**Entry for 2023 BASIC 10Liner Contest**
-**Category: PUR-80**
-**Written For: Commodore 64 BASIC V2
+- **©2023 Adam Whitney**
+- **Entry for 2023 BASIC 10Liner Contest**
+- **Category: PUR-80**
+- **Written For: Commodore 64 BASIC V2**
 
 ## Intro
 
