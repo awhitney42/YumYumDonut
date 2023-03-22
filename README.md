@@ -25,18 +25,18 @@ How many bites can you take in 90 seconds before the game is over?
 
 ## File List
 
-- README.txt : README file containing the following:
+- **README.txt** : README file containing the following:
   - Intro and Directions for How to Play
   - Starting the Game via Emulator (or Original C64 Hardware)
   - File List
   - Full Program Listing for PUR-80 Category (10 Lines with 80 Characters Max)
   - BASIC Code Explanation
-- yumyumdonut.bas : BASIC program code listing
-- yumyumdonut.prg : Yum Yum Donut Commodore 64 Program
-- yumyumdonut.d64 : Yum Yum Donut Commodore 64 Disk Image
-- Yum Yum Donut - Game Cover Art.jpg : Game Cover Art
-- Yum Yum Donut - Game.png : Game Screenshot
-- Yum Yum Donut - Program Listing.png : Program Listing Screenshot
+- **yumyumdonut.bas** : BASIC program code listing
+- **yumyumdonut.prg** : Yum Yum Donut Commodore 64 Program
+- **yumyumdonut.d64** : Yum Yum Donut Commodore 64 Disk Image
+- **Yum Yum Donut - Game Cover Art.jpg** : Game Cover Art
+- **Yum Yum Donut - Game.png** : Game Screenshot
+- **Yum Yum Donut - Program Listing.png** : Program Listing Screenshot
 
 ## Starting the Game via Emulator (or Original C64 Hardware)
 
