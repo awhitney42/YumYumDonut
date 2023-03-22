@@ -54,16 +54,43 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
     8 g=24+e/5:printt$a$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g
     9 c=-(j>1):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:e=ti/60:return
 
-- Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Timer
-- Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data
-- Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position
-- Line 3 : Calculate Sprite Movement Values and Check Game Timer
-- Line 4 : Sprite Shape Data
-- Line 5 : More Sprite Shape Data and Scoreboard Color for Game End
-- Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping
-- Line 7 : SUBROUTINE - Read Sprite Data and Draw (Poke) Sprites Into Memory
-- Line 8 : SUBROUTINE - Increment Scoreboard and Play Sound Effects
-- Line 9 : SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount
+- **Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Timer**
+  - **s** : Sprite Data Memory Location at 12288
+  - **v** : Sprite Control at 53248
+  - **poke2040,192:poke2041,193** : Sprite Data Memory Pointers at 192 * 64 = 12288 and 193 * 64 = 12352
+  - **t$** : Scoreboard Message
+  - **ti$="000000"** : Reset System Timer
+- **Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data**
+  - **pokev,50:pokev+1,80** : Set X/Y Coordinations of Panda Sprite
+  - **pokev+21,3** : Enabled Sprites 0 and 1 (Panda and Donut)
+  - **pokev+28,1** : Enabled Multi-Color Mode on Sprite 0
+  - **pokev+39,1** : Set Main Sprite Color to White
+  - **q** : SID Chip Control at 54272
+  - **y** : Initial Sprite Data Offset to 0
+  - **gosub7:gosub7** : Call SUB 7 Twice to Draw Both Sprites
+- **Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position**
+  - **onkgosub9,9,9,9** : On Joystick Push (k is 1, 2, 3, or 4) Then Call Sprite Movement Subroutine 9
+  - **j=z*2+2** : Set Random Donut Movement Axis
+  - **f=peek(v+30)and1** : Check for Sprite Collision
+  - **onf+1gosub9,8** : If No Collision Then Call Sprite Movement Subroutine 9 ; If Collision then Call Scoreboard Subroutine 8
+  - **f=peek(56320)and15** Check for Joystick Push
+- **Line 3 : Calculate Sprite Movement Values and Check Game Timer**
+  -  **k=f-int(f/5)*5** : Determine Joystick Direction
+  -  **d=(2*(int(k/2)-int(k/4)*2)-1)*z*33** : Calculate Sprite Movement Direction and Amount
+  -  **b=h*z:z=rnd(1)** : Additional Donut Jump As Score Increases
+  -  **ife>90thenend** : If Game Timer > 90 Seconds Then Game Over
+- **Line 4 : Sprite Shape Data**
+  - Sprite Data Bytes  
+- **Line 5 : More Sprite Shape Data and Scoreboard Color for Game End**
+   - More Sprite Data Bytes
+   - **ife>70thena$="{yel}** : If Game Timer > 70 Seconds Then Set Scoreboard to Yellow
+- **Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping**
+   - More Sprite Data Bytes
+   - **j=-(k>2)** : Set Panda Movement Axis Based on Joystick Direction
+   - **goto2** : Loop Back to Line 2
+- **Line 7 : SUBROUTINE - Read Sprite Data and Draw (Poke) Sprites Into Memory**
+- **Line 8 : SUBROUTINE - Increment Scoreboard and Play Sound Effects**
+- **Line 9 : SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount**
 
 Below is a verbose explanation of what happens in each of these program lines. [ [YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut) ]
 
