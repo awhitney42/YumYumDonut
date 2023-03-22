@@ -30,15 +30,15 @@ The BASIC 10Liner Contest is an extreme challenge of creating an entire video ga
 Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
 
     0 w=192:s=w*64:v=53248:poke2040,w:poke2041,w+1:t$="{clr}{home}{wht}donut! yum":ti$="000000"
-    1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:y=0:q=54272:gosub7:gosub7
+    1 pokev,w/2:pokev+1,w:pokev+21,3:pokev+28,1:pokev+39,1:y=0:q=54272:gosub7:gosub7
     2 onkgosub9,9,9,9:j=z*2+2:f=peek(v+30)and1:onf+1gosub9,8:f=peek(56320)and15
-    3 l=39:k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*l:b=h*z:ifti>q/7thenend
+    3 l=37:k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*l:b=h*z:ifti>q/10thenend
     4 data3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2
     5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51,0,0,97
     6 data128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:j=int((k-1)/2):z=rnd(1):goto2
     7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:w=24
-    8 printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g:g=w+ti/300
-    9 c=int(j/2):x=peek(v+(j-c*2))+d+(c*b):x=x-int(x/239)*239:pokev+j,x:return
+    8 g=w+ti/300:printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g
+    9 c=int(j/2):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:return
 
 Here is an explanation of what happens in each of these program lines.
 
@@ -103,13 +103,13 @@ The last statement `f = peek(56320) and 15` sets the variable **f** to be the re
  
 #### Line 3 : Calculate Sprite Movement Values and Check Game Timer ####
  
-`3 l=39:k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*l:b=h*z:ifti>q/7thenend`
+`l=37:k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*l:b=h*z:ifti>q/10thenend`
 
 Line 3 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 6.
 
 The statements in this line set some essential variables that are used in the sprite movement routine on line 9, which will be called in the next iteration of the main loop when line 2 is reached again.
 
-First, a constant **l** is set to 39 with `l=39`. This constant is used in the sprite movement calculation.
+First, a constant **l** is set to 37 with `l=37`. This constant is used in the sprite movement calculation.
 
 Next the value of **k** is set, which if you recall will be used to perform a sprite movement at the start of line 2 if k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = f - int(f / 5) * 5` or **f** MODULO 5:
 
@@ -120,7 +120,7 @@ Next the value of **k** is set, which if you recall will be used to perform a sp
 - 14 MOD 5 = **4 (Up)**
 - 15 MOD 5 = *0 (No Direction Pushed)*
 
-The next statement in this line `d = (2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * l` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in line 6, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **l** or 39. Using 39 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
+The next statement in this line `d = (2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * l` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in line 6, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **l** or 37. Using 37 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
 
 So **d** as derived from **k**, before the random jump value is applied, will be the following values:
 - (2 * (INT(0/2) - INT(0/4) * 2) - 1) = **-1 (No Movement)**
@@ -131,11 +131,11 @@ So **d** as derived from **k**, before the random jump value is applied, will be
 
 As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or decrease its X/Y coordinates based on **d**, moving it in the correct direction.
 
-If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * l` or `-1 * z * l`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -39, providing the random jump distance for the donut. 
+If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * l` or `-1 * z * l`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -37, providing the random jump distance for the donut. 
 
 The next statement is `b = h * z`. If you recall, **z** is a random floating point number between 0 and 1. As you will see in line 8, **h** is the current score. So, the value of **b** calculated here will be a fraction of the current score, that will become randomly larger (on average) as the score increases. This **b** value will be used in the sprite movement subroutine on line 9 to jump the donut a larger distance as the score increases, making the game progressively more difficult.
 
-The final statement in this line `if ti > q / 7 then end` checks the built-in system timer variable TI to see if it exceeds approximately 120 seconds. If so, then the game will be over. This gives the panda only 2 minutes per gameplay to eat the donut!
+The final statement in this line `if ti > q / 10 then end` checks the built-in system timer variable TI to see if it exceeds approximately 90 seconds. If so, then the game will be over. Hurry, panda! You only have 90 seconds to eat the donut!
 
 
 #### Line 4 : Sprite Shape Data ####
@@ -191,7 +191,9 @@ The final statement in this sub is `w=24`. This sets the baseline sound effect f
 
 When the sprites collide, subroutine 8 is called. This increments the Yum score shown on the screen and then plays a sound effect.
 
-`8 printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g:g=w+ti/300`
+`8 g=w+ti/300:printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g`
+
+At the start of this line `g = w + ti / 300` sets the frequency value for the sound effect. The value of **g** is set to the constant **w** (a value of 24 set in line 7) plus the current system timer value divided by 300. The result is that the pitch of the sound effect increases in frequency every few seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
 
 The `print t$ h` statement prints the scoreboard message in **t$** followed by the current YUM! score **h** to the top of the screen.
 
@@ -209,8 +211,6 @@ The remaining statements that POKE to t**q** control the SID sound chip in order
 
 `pokeq+1,g` sets the high frequency (pitch) to the value stored in **g**.
 
-`g = w + ti / 300` sets the sound frequency value for next time. The value of **g** is set to the constant **w** (a value of 24 set in line 7) plus the current system timer value divided by 300. The result is that the pitch of the sound effect increases in frequency every few seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
-
 The sound effect produced is a very arcade-like "Boop!" when the panda takes a bite, adding significantly to the gameplay experience!
 
 Now, if you have eagle eyes then you may have noticed that lines 7 and 8 don't end with a RETURN even though they are subroutines. Omitting those RETURNs saves space. So, at the conclusion of both subroutines 7 and 8, the program continues along and runs the subsequent subroutines. The program is structured such that that running line 8 and/or line 9 immediately after running the previous line(s) has no negative effect on the program. For example, in the case of running line 9 immediately after calling line 8 due to a sprite collision, this will have the effect of simply moving the donut sprite after the collision.
@@ -220,7 +220,7 @@ Now, if you have eagle eyes then you may have noticed that lines 7 and 8 don't e
 
 All of the sprite movement is performed by the tenth and final line of the program. This subroutine is called by line 2 at least once per program loop, and the **j**, **d**, and **b** values are used to specify which sprite to move, which direction to move it, and by what amount.
 
-`9 c=int(j/2):x=peek(v+(j-c*2))+d+(c*b):x=x-int(x/239)*239:pokev+j,x:return`
+`9 c=int(j/2):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:return`
 
 This still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when sub 9 is called and how they affect the sprite movement. The explanation here is very long, but the goal is to sure it is understood how this one line (interacting with lines 2, 3, and 6 where **j** and **d** are calculated) can control all sprite movement in the entire game!
 
@@ -229,7 +229,7 @@ The first statement `c=int(j/2)` calculates a value of **c** as follows:
 - **c** = **0** if **j** is 0 or 1
 - **c** = **1** if **j** is 1 or 2
 
-The next statement `x = peek( v + (j - c * 2)) + d + (c * b)` calculates the coordinate to use for moving the sprite.
+The next statement `x = peek( v + (j - c * 2)) + d - (c * b)` calculates the coordinate to use for moving the sprite.
 
 The coordinates of the current position of both sprites are always as follows:
 
@@ -252,9 +252,9 @@ So, using this value of **j**, the following coordinates will be PEEKed:
 - j = 0 : PEEK(v + 0) : X coordinate of Sprite 0 (panda) : joystick was pushed left or right
 - j = 1 : PEEK(v + 1) : Y coordinate of Sprite 0 (panda) : joystick was pushed up or down
 
-In the middle of the expression in this statement `x = peek( v + (j - c * 2)) + d + (c * b)`, the value of **d** is added to the coordinate value retrieved by the PEEK. If you recall from line 4, **d** will be either a positive or negative value (to move up or left for a negative value, down or right for a positive one).
+In the middle of the expression in this statement `x = peek( v + (j - c * 2)) + d - (c * b)`, the value of **d** is added to the coordinate value retrieved by the PEEK. If you recall from line 4, **d** will be either a positive or negative value (to move up or left for a negative value, down or right for a positive one).
 
-At the end of the expression, `(c * b)` is added to the coordination. This value will only be non-zero if the donut sprite is selected. So, in the case covered here for a joystick push and panda movement, this will be zero.
+At the end of the expression, `(c * b)` is subtracted from the coordinate. This value will only be non-zero if the donut sprite is selected. So, in the case covered here for a joystick push and panda movement, no additional amount will be subtracted.
 
 When completed, this statement produces an **x** value that will be a coordinate moving the panda sprite either up or down by a certain amount if the joystick was pushed in the up or down directions, or left or right by that amount if the joystick was pushed in those directions.
 
@@ -268,20 +268,20 @@ Finally, the subroutine RETURNs to line 2.
 
 At this point in the program execution, regardless of whether or not sub10 was just called because of a joystick push, line 3 will now calculate the value of **j** to be `j=z*2+2`, setting it to be **some random number between approximately 2.0001 and 3.9999**.
 
-Given these values of **j**, when sub 9 runs `x = peek( v + (j - c * 2)) + d + (c * b)` this will PEEK the following locations:
+Given these values of **j**, when sub 9 runs `x = peek( v + (j - c * 2)) + d - (c * b)` this will PEEK the following locations:
 
 - j >=2 and j < 3 : PEEK(v + 0) : **X** coordinate of Sprite 0 (**panda**)
 - j >=2 and j < 4 : PEEK(v + 1) : **Y** coordinate of Sprite 0 (**panda**)
 
 (You will see that PEEK and POKE both accept the input of `v + j` in line 10, where **j** is a floating point number, so they must simply run INT on this value internally.)
 
-So, in the expression `x = peek( v + (j - c * 2)) + d + (c * b)` the value from the PEEK will be based on the position of the panda.
+So, in the expression `x = peek( v + (j - c * 2)) + d - (c * b)` the value from the PEEK will be based on the position of the panda.
 
-With there having been no joystick movement, **d** will always be a negative random number between 0 and 39 based on the calculation in line 3.
+With there having been no joystick movement, **d** will always be a negative random number between 0 and 37 based on the calculation in line 3.
 
-At the end of the expression `(c * b)` is added to the coordination in the case where the donut is moving. If you recall, **c** will be 1 when the donut sprite is selected and **b** is a random value that increases in magnitude as the game score increases. This results in the **x** coordinate that is on average farther away from the panda as the score increases, making it progressively harder to catch!
+At the end of the expression `(c * b)` is subtracted from the coordinate. If you recall, **c** will be 1 when the donut sprite is selected and **b** is a random value that increases in magnitude as the game score increases. (**d** is always a negative number when the donut is moving, which is why **c * b** is subtracted instead of added.) This results in the **x** coordinate that is on average farther away from the panda as the score increases, making it progressively harder to catch!
 
-So, the final value of **x** from this statement therefore will be the current X or Y coordinate of the panda plus some random distance. Therefore the donut will always move some random amount relative to the current position of the panda.
+So, the final value of **x** from this statement therefore will be the current X or Y coordinate of the panda minus some random distance. Therefore the donut will always move some random amount relative to the current position of the panda.
 
 Now you can understand the sprite movement for the game. When line 9 runs, either the panda is moved in a controlled direction specified by the joystick push or the donut makes a random jump!
 
