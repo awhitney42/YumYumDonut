@@ -105,8 +105,8 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
   - **pokeq+1,g** : Set Sound Frequency for Boop! Sound Effect
 - **Line 9 : SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount**
   - **c=-(j>1)** : Set Additional Jump Flag (0 for Panda, 1 for Donut)
-  - **x=peek(v+(j-c*2))+d-(c*b)** : Calculate New Sprite Coordinate Based on Sprite Selector (j), Additional Jump Flag (c), Direction and Amount (d), and Additional Jump Value (b)
-  - **x=x-int(x/239) * 239** : Make sure New Coordinate is Within Screen Dimensions
+  - **x=peek(v + (j - c * 2)) + d -(c * b)** : Calculate New Sprite Coordinate Based on Sprite Selector (j), Additional Jump Flag (c), Direction and Amount (d), and Additional Jump Value (b)
+  - **x=x-int(x/239) * 239** : Make Sure New Coordinate is Within Screen Dimensions
   - **pokev+j,x** : Move the Sprite
   - **e=ti/60** : Update Elapsed Timer
   - **return** : Return to Main Program Loop
