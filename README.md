@@ -7,7 +7,7 @@
 - **Entry for 2023 BASIC 10Liner Contest**
 - **Category: PUR-80**
 - **Written for Commodore 64 BASIC V2**
-- **YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut)**
+- **[YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut)**
 
 ## Intro
 
