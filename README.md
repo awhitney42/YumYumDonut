@@ -54,7 +54,7 @@ Type LIST you want to see the program listing:
 
 ## Full Program Listing for PUR-80 Category (10 Lines with 80 Characters Max)
 
-Below is the *entire* 10-line BASIC program listing for Yum Yum Donut.2
+Below is the *entire* 10-line BASIC program listing for Yum Yum Donut.
 
     0 s=12288:v=53248:poke2040,192:poke2041,193:t$="{clr}{home}donut! yum":ti$="000000"
     1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7
