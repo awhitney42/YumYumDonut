@@ -66,31 +66,50 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
   - **pokev+28,1** : Enabled Multi-Color Mode on Sprite 0
   - **pokev+39,1** : Set Main Sprite Color to White
   - **q** : SID Chip Control at 54272
-  - **y** : Initial Sprite Data Offset to 0
+  - **y** : Initial Sprite Memory Offset to 0
   - **gosub7:gosub7** : Call SUB 7 Twice to Draw Both Sprites
 - **Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position**
-  - **onkgosub9,9,9,9** : On Joystick Push (k is 1, 2, 3, or 4) Then Call Sprite Movement Subroutine 9
+  - **on k gosub 9,9,9,9** : On Joystick Push (k is 1, 2, 3, or 4) Then Call Sprite Movement Subroutine 9
   - **j=z*2+2** : Set Random Donut Movement Axis
-  - **f=peek(v+30)and1** : Check for Sprite Collision
-  - **onf+1gosub9,8** : If No Collision Then Call Sprite Movement Subroutine 9 ; If Collision then Call Scoreboard Subroutine 8
-  - **f=peek(56320)and15** Check for Joystick Push
+  - **f=peek(v+30) and 1** : Check for Sprite Collision
+  - **on f+1 gosub 9,8** : If No Collision Then Call Sprite Movement Subroutine 9 ; If Collision then Call Scoreboard Subroutine 8
+  - **f=peek(56320) and 15** Check for Joystick Push
 - **Line 3 : Calculate Sprite Movement Values and Check Game Timer**
   -  **k=f-int(f/5)*5** : Determine Joystick Direction
   -  **d=(2*(int(k/2)-int(k/4)*2)-1)*z*33** : Calculate Sprite Movement Direction and Amount
-  -  **b=h*z:z=rnd(1)** : Additional Donut Jump As Score Increases
-  -  **ife>90thenend** : If Game Timer > 90 Seconds Then Game Over
+  -  **b=h*z** : Additional Donut Jump As Score Increases
+  -  **z=rnd(1)** : Set Random Number for Next Loop Iteration
+  -  **if e>90 then end** : If Game Timer > 90 Seconds Then Game Over
 - **Line 4 : Sprite Shape Data**
   - Sprite Data Bytes  
 - **Line 5 : More Sprite Shape Data and Scoreboard Color for Game End**
    - More Sprite Data Bytes
-   - **ife>70thena$="{yel}** : If Game Timer > 70 Seconds Then Set Scoreboard to Yellow
+   - **if e>70 then a$="{yel}** : If Game Timer > 70 Seconds Then Set Scoreboard to Yellow
 - **Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping**
    - More Sprite Data Bytes
    - **j=-(k>2)** : Set Panda Movement Axis Based on Joystick Direction
-   - **goto2** : Loop Back to Line 2
+   - **goto 2** : Loop Back to Line 2
 - **Line 7 : SUBROUTINE - Read Sprite Data and Draw (Poke) Sprites Into Memory**
+   - **z=y+32:for x=y to z:read a:pokes+x,a:next** : Read 33 Bytes of Sprite Data and Poke into Memory
+   - **for x=z+1 to z+31:pokes+x,0:next** : Poke Zero into Remaining Sprite Memory
+   - **y=x** : Set Sprite Memory Offset for Next Run
+   - **a$="{wht}"** : Set Initial Scoreboard Color to White
 - **Line 8 : SUBROUTINE - Increment Scoreboard and Play Sound Effects**
+  - **g=24+e/5** : Set Sound Frequency to Increase as Game Timer Increases
+  - **print t$ a$ h** : Print Scoreboard Color, Message, and Score
+  - **h=h+1** : Increment Score
+  - **pokeq+4,0** : Reset Sound Chip
+  - **pokeq+4,17** : Set Sound Waveform to Triangle
+  - **pokeq+24,15** : Set Sound Volume to Max
+  - **pokeq+5,6** : Set Sound Decay to 6
+  - **pokeq+1,g** : Set Sound Frequency for Boop! Sound Effect
 - **Line 9 : SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount**
+  - **c=-(j>1)** : Set Additional Jump Flag (0 for Panda, 1 for Donut)
+  - **x=peek(v+(j-c*2))+d-(c*b)** : Calculate New Sprite Coordinate Based Sprite Selector (j), Additional Jump Flag (c), Direction and Amount (d), and Additional Jump Value (b)
+  - **x=x-int(x/239)*239** : Make sure New Coordinate is Within Screen Dimensions
+  - **pokev+j,x** : Move the Sprite
+  - **e=ti/60** : Update Elapsed Timer
+  - **return** : Return to Main Program Loop
 
 Below is a verbose explanation of what happens in each of these program lines. [ [YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut) ]
 
