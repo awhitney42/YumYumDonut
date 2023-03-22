@@ -81,7 +81,7 @@ Line 2 begins the main loop of the game. As the user plays, the program will jum
     
 `2 onkgosub9,9,9,9:j=z*2+2:f=peek(v+30)and1:onf+1gosub9,8:f=peek(56320)and15`
 
-The first statement in this line uses the **ON** keyword in Commodore BASIC V2 provides a way to jump to various sepcified program locations, either as a GOTO or a GOSUB based on an indexed variable. The ON keyword is used twice in this line and was a great way to save space in the control logic!
+The first statement in this line uses the **ON** keyword in Commodore BASIC V2, which provides a way to jump to various sepcified program locations, either as a GOTO or a GOSUB based on an indexed variable. The ON keyword is used twice in this line and was a great way to save space in the control logic!
 
 The `on k gosub 9, 9, 9, 9` statement evaluates the value of **k**, and then performs a GOSUB to line 9 if the value of **k** is 1, 2, 3, or 4. If **k** is less than 1 or more than 4, then no jump will be taken. We will later see that **k** will be set based on the state of the joystick, and the subroutine at line 9 controls the sprite movement appropriately for given values of **k**.
 
