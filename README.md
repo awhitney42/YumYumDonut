@@ -1,14 +1,13 @@
 <p align="center"><img src="https://adamwhitney.net/static/images/YumYumDonut-GameCoverArt.jpg" alt="Cover Art" width="200" height="320"></p>
 
 # Yum Yum Donut
-## Yum Yum Donut : Commodore 64 Game for the BASIC 10Liner Contest
 **©2023 Adam Whitney**
 
-### Intro
+## Intro
 
 Yum Yum Donut is my first video game creation! I made it as an entry into the [BASIC 10Liner Contest](https://www.homeputerium.de/) in the PUR-80 Category for the Commodore 64. It was inspired (and named) by my daughter, who loves pandas and believes that they should be able to enjoy delicious donuts too.
 
-### Loading the Game
+## Loading the Game
 
 Drag YUMYUMDONUT.PRG to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that it's configured for a keyboard keymap that works for you.
 
@@ -17,13 +16,13 @@ If you have native hardware, copy the D64 image to a floppy disk or load it via 
     LOAD "YUMYUMDONUT",8
     RUN
 
-### Game Play
+## Game Play
 
 You are a panda with a hankering for a scrumptious donut. When you try to take a bite, you are surprised to see the donut running away! It is so tasty, you must pursue it and take as many yummy bites as possible.
 
 Use the joystick to move the panda in pursuit of the donut. Each successful bite increases your experience of Yum! Each bite also makes the donut harder to catch. How many bites can you take in 90 seconds before the game is over?
 
-### BASIC Source Code Explanation
+## BASIC Source Code Explanation
 
 The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code. Each logical line has a max of 80 characters allowed for the PUR-80 category. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
 
@@ -43,7 +42,7 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
 Here is an explanation of what happens in each of these program lines.
 
 
-#### Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Clock ####
+### Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Clock
 
 Lines 0 is the first of two lines that comprise the main initialization sequence.
 
@@ -62,7 +61,7 @@ Lines 0 is the first of two lines that comprise the main initialization sequence
 As our BASIC program will never use that much dynamic free memory, we can safely omit these statements to save space.
 
 
-#### Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data ####
+### Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data
 
 `1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7`
 
@@ -75,7 +74,7 @@ As our BASIC program will never use that much dynamic free memory, we can safely
 - `gosub7:gosub7` : The calls the subroutine at line 7 two times. Each time this runs, it loads the shape data for the each of the two sprites.
 
 
-#### Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position ####
+### Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position
 
 Line 2 begins the main loop of the game. As the user plays, the program will jump here repeatedly until the game ends.
     
@@ -100,7 +99,7 @@ The last statement `f = peek(56320) and 15` sets the variable **f** to be the re
 - 15 if the joystick is not pushed at all
  
  
-#### Line 3 : Calculate Sprite Movement Values and Check Game Timer ####
+### Line 3 : Calculate Sprite Movement Values and Check Game Timer
  
 `3 k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*33:b=h*z:z=rnd(1):ife>90thenend`
 
@@ -137,20 +136,20 @@ The next statement is `b = h * z`. If you recall, **z** is a random floating poi
 The final statement in this line `if e > 90 then end` checks the elapsed time to see if it exceeds 90 seconds. If so, then the game will be over. Hurry, panda! You only have 90 seconds to eat the donut!
 
 
-#### Line 4 : Sprite Shape Data ####
+### Line 4 : Sprite Shape Data
 
 Lines 4, 5, and 6 hold the sprite data that defines the shapes of the panda and donut sprites. Each sprite has the same amount of shape data (33 bytes), so that the subroutine at line 7 that POKEs (draws) the sprite into memory could be run without needing to specify the sprite size and thereby saving space in this 10-line program.
 
 `4 data3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2`
 
 
-#### Line 5 : More Sprite Shape Data and Scoreboard Color for Game End ####
+### Line 5 : More Sprite Shape Data and Scoreboard Color for Game End
 
 `5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0:ife>70thena$="{yel}"`
 
 The `if e > 70 then a$ = "{yel}"` statement checks the elapsed time to see if it exceeds 70 seconds. If so, then the scoreboard color in **a$** will be set to yellow to indicate that time is running out.
 
-#### Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping ####
+### Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping
 
 Line 6 has the remainder of the sprite data. There are two additional program statements at the end.
 
@@ -168,7 +167,7 @@ After the sprite data in line 6, the next statement `j = -(k > 2)` sets **j** to
 The last statement is the final statement in the program's main loop. `goto 2` does just that! It jumps to line 2, starting the main loop all over again!
 
 
-#### Line 7 : SUBROUTINE - Read Sprite Data and Poke It Into Memory ####
+### Line 7 : SUBROUTINE - Read Sprite Data and Poke It Into Memory
 
 Line 7 is the first of three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that holds the memory address of the start of Sprite 0.
 
@@ -185,7 +184,7 @@ The next statement in this sub is `y=x`. After the first run, this sets the **y*
 The final statement `a$="{wht}"` sets the intial scoreboard color to white.
 
 
-#### Line 8 : SUBROUTINE - Increment Score and Play Sound Effects ####
+### Line 8 : SUBROUTINE - Increment Score and Play Sound Effects
 
 When the sprites collide, subroutine 8 is called. This increments the Yum score shown on the screen and then plays a sound effect.
 
@@ -214,7 +213,7 @@ The sound effect produced is a very arcade-like "Boop!" when the panda takes a b
 Now, if you have eagle eyes then you may have noticed that lines 7 and 8 don't end with a RETURN even though they are subroutines. Omitting those RETURNs saves space. So, at the conclusion of both subroutines 7 and 8, the program continues along and runs the subsequent subroutines. The program is structured such that that running line 8 and/or line 9 immediately after running the previous line(s) has no negative effect on the program. For example, in the case of running line 9 immediately after calling line 8 due to a sprite collision, this will have the effect of simply moving the donut sprite after the collision.
 
 
-#### Line 9 SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount ####
+### Line 9 SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount
 
 All of the sprite movement is performed by the tenth and final line of the program. This subroutine is called by line 2 at least once per program loop, and the **j**, **d**, and **b** values are used to specify which sprite to move, which direction to move it, and by what amount.
 
@@ -285,7 +284,7 @@ So, the final value of **x** from this statement therefore will be the current X
 
 Now you can understand the sprite movement for the game. When line 9 runs, either the panda is moved in a controlled direction specified by the joystick push or the donut makes a random jump!
 
-### BASIC 10Liner Contest Rules
+## BASIC 10Liner Contest Rules
 
 Yum Yum Donut is my entry to the BASIC 10Liner Contest in the Category "PUR-80":
 
