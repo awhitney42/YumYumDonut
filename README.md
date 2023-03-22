@@ -60,7 +60,7 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
 - Line 8 : SUBROUTINE - Increment Scoreboard and Play Sound Effects
 - Line 9 : SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount
 
-Below is a verbose explanation of what happens in each of these program lines. 
+Below is a verbose explanation of what happens in each of these program lines. [ [YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut) ]
 
 ### Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Timer
 
