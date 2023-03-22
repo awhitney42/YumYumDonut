@@ -6,7 +6,7 @@
 
 ### Intro
 
-Yum Yum Donut is my first video game creation! I made it as an entry into the [BASIC 10Liner Contest](https://www.homeputerium.de/) in the PUR-80 Category and runs on the Commodore 64. It was inspired (and named) by my daughter, who loves pandas and believes that they should be able to enjoy delicious donuts too.
+Yum Yum Donut is my first video game creation! I made it as an entry into the [BASIC 10Liner Contest](https://www.homeputerium.de/) in the PUR-80 Category for the Commodore 64. It was inspired (and named) by my daughter, who loves pandas and believes that they should be able to enjoy delicious donuts too.
 
 ### Loading the Game
 
