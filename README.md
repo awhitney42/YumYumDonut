@@ -25,7 +25,7 @@ Use the joystick to move the panda in pursuit of the donut. Each successful bite
 
 ### BASIC Source Code Explanation
 
-The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code. Each logical line has a max of 80 characters allowed. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
+The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code. Each logical line has a max of 80 characters allowed for the PUR-80 category. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
 
 Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
 
