@@ -21,7 +21,7 @@ If you have native hardware, copy the D64 image to a floppy disk or load it via 
 
 You are a panda with a hankering for a scrumptious donut. When you try to take a bite, you are surprised to see the donut running away! It is so tasty, you must pursue it and take as many yummy bites as possible.
 
-Use the joystick to move the panda in pursuit of the donut. Each successful bite increases your experience of Yum! Each bite also makes the donut harder to catch. How many bites can you take in 2 minutes before the game is over?
+Use the joystick to move the panda in pursuit of the donut. Each successful bite increases your experience of Yum! Each bite also makes the donut harder to catch. How many bites can you take in 90 seconds before the game is over?
 
 ### BASIC Source Code Explanation
 
