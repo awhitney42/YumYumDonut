@@ -7,6 +7,7 @@
 - **Entry for 2023 BASIC 10Liner Contest**
 - **Category: PUR-80**
 - **Written for Commodore 64 BASIC V2**
+- **YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut)**
 
 ## Intro
 
@@ -114,7 +115,7 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
 
 ## In-Depth Explanation of BASIC Code
 
-Below is a verbose explanation of what happens in each of these program lines. [ [YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut) ]
+Below is a verbose explanation of what happens in each of these program lines.
 
 ### Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Timer
 
