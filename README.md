@@ -22,6 +22,11 @@ If you have original hardware, the copy the YUMYUMDONUT.D64 image to a floppy di
     LOAD "YUMYUMDONUT",8
     RUN
 
+Type LIST you want to see the program listing:
+
+    LOAD "YUMYUMDONUT",8
+    LIST
+
 ## How to Play
 
 You are a panda with a hankering for a scrumptious donut. When you try to take a bite, you are surprised to see the donut running away! It is so tasty, you must pursue it and take as many yummy bites as possible.
