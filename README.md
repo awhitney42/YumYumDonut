@@ -75,8 +75,8 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
   - **on f+1 gosub 9,8** : If No Collision Then Call Sprite Movement Subroutine 9 ; If Collision then Call Scoreboard Subroutine 8
   - **f=peek(56320) and 15** Check for Joystick Push
 - **Line 3 : Calculate Sprite Movement Values and Check Game Timer**
-  -  **k=f-int(f/5)*5** : Determine Joystick Direction
-  -  **d=(2*(int(k/2)-int(k/4)*2)-1)*z*33** : Calculate Sprite Movement Direction and Amount
+  -  **k=f-int(f/5) * 5** : Determine Joystick Direction
+  -  **d=(2 * (int(k/2) - int(k/4) * 2) - 1) * z * 33** : Calculate Sprite Movement Direction and Amount
   -  **b=h*z** : Additional Donut Jump As Score Increases
   -  **z=rnd(1)** : Set Random Number for Next Loop Iteration
   -  **if e>90 then end** : If Game Timer > 90 Seconds Then Game Over
@@ -106,7 +106,7 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
 - **Line 9 : SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount**
   - **c=-(j>1)** : Set Additional Jump Flag (0 for Panda, 1 for Donut)
   - **x=peek(v+(j-c*2))+d-(c*b)** : Calculate New Sprite Coordinate Based Sprite Selector (j), Additional Jump Flag (c), Direction and Amount (d), and Additional Jump Value (b)
-  - **x=x-int(x/239)*239** : Make sure New Coordinate is Within Screen Dimensions
+  - **x=x-int(x/239) * 239** : Make sure New Coordinate is Within Screen Dimensions
   - **pokev+j,x** : Move the Sprite
   - **e=ti/60** : Update Elapsed Timer
   - **return** : Return to Main Program Loop
