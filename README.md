@@ -1,32 +1,42 @@
 <p align="center"><img src="https://adamwhitney.net/static/images/YumYumDonut-GameCoverArt.jpg" alt="Cover Art" width="200" height="320"></p>
 
 # Yum Yum Donut
+
 **©2023 Adam Whitney**
+**Entry for 2023 BASIC 10Liner Contest**
+**Category: PUR-80**
+**Written For: Commodore 64 BASIC V2
 
 ## Intro
 
-Yum Yum Donut is my first video game creation! I made it as an entry into the [BASIC 10Liner Contest](https://www.homeputerium.de/) in the PUR-80 Category for the Commodore 64. It was inspired (and named) by my daughter, who loves pandas and believes that they should be able to enjoy delicious donuts too.
+Yum Yum Donut is my first video game creation! It was inspired (and named) by my daughter, who loves pandas and believes that they should be able to enjoy delicious donuts too.
 
-## Loading the Game
+I created it as a contest entry into the [BASIC 10Liner Contest](https://www.homeputerium.de/) in the PUR-80 category.
 
-Drag YUMYUMDONUT.PRG to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that it's configured for a keyboard keymap that works for you.
+## Starting the Game
 
-If you have native hardware, copy the D64 image to a floppy disk or load it via a device such as an SD2IEC. Assuming your floppy or SD2IEC drive is device #8, then issue the following commands:
+Drag YUMYUMDONUT.PRG to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that the joystick is configured for a keyboard mapping that works for you.
+
+If you have original hardware, the copy the YUMYUMDONUT.D64 image to a floppy disk or load it via a device such as an SD2IEC. Assuming your floppy or SD2IEC drive is device #8, then issue the following commands:
 
     LOAD "YUMYUMDONUT",8
     RUN
 
-## Game Play
+## How to Play
 
 You are a panda with a hankering for a scrumptious donut. When you try to take a bite, you are surprised to see the donut running away! It is so tasty, you must pursue it and take as many yummy bites as possible.
 
-Use the joystick to move the panda in pursuit of the donut. Each successful bite increases your experience of Yum! Each bite also makes the donut harder to catch. How many bites can you take in 90 seconds before the game is over?
+**Use the joystick to move the panda** in pursuit of the donut. Each successful bite increases your experience of Yum! Each bite also makes the donut harder to catch.
 
-## BASIC Source Code Explanation
+How many bites can you take in 90 seconds before the game is over?
 
-The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code. Each logical line has a max of 80 characters allowed for the PUR-80 category. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
+## BASIC Code Explanation
 
-Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
+The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code.
+
+Each logical line has a max of 80 characters allowed for the PUR-80 category. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
+
+Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
 
     0 s=12288:v=53248:poke2040,192:poke2041,193:t$="{clr}{home}donut! yum":ti$="000000"
     1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7
@@ -39,10 +49,20 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
     8 g=24+e/5:printt$a$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g
     9 c=-(j>1):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:e=ti/60:return
 
-Here is an explanation of what happens in each of these program lines.
+- Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Timer
+- Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data
+- Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position
+- Line 3 : Calculate Sprite Movement Values and Check Game Timer
+- Line 4 : Sprite Shape Data
+- Line 5 : More Sprite Shape Data and Scoreboard Color for Game End
+- Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping
+- Line 7 : SUBROUTINE - Read Sprite Data and Draw (Poke) Sprites Into Memory
+- Line 8 : SUBROUTINE - Increment Scoreboard and Play Sound Effects
+- Line 9 : SUBROUTINE - Move A Sprite Based on Current Sprite Position and Movement Amount
 
+Below is a verbose explanation of what happens in each of these program lines. 
 
-### Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Clock
+### Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Timer
 
 Lines 0 is the first of two lines that comprise the main initialization sequence.
 
@@ -167,7 +187,7 @@ After the sprite data in line 6, the next statement `j = -(k > 2)` sets **j** to
 The last statement is the final statement in the program's main loop. `goto 2` does just that! It jumps to line 2, starting the main loop all over again!
 
 
-### Line 7 : SUBROUTINE - Read Sprite Data and Poke It Into Memory
+### Line 7 : SUBROUTINE - Read Sprite Data and Draw (Poke) Sprites Into Memory
 
 Line 7 is the first of three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that holds the memory address of the start of Sprite 0.
 
@@ -184,7 +204,7 @@ The next statement in this sub is `y=x`. After the first run, this sets the **y*
 The final statement `a$="{wht}"` sets the intial scoreboard color to white.
 
 
-### Line 8 : SUBROUTINE - Increment Score and Play Sound Effects
+### Line 8 : SUBROUTINE - Increment Scoreboard and Play Sound Effects
 
 When the sprites collide, subroutine 8 is called. This increments the Yum score shown on the screen and then plays a sound effect.
 
