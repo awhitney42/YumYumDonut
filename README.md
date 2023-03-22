@@ -1,12 +1,12 @@
 <p align="center"><img src="https://adamwhitney.net/static/images/YumYumDonut-GameCoverArt.jpg" alt="Cover Art" width="200" height="320"></p>
 
 # Yum Yum Donut
-## Commodore 64 Game by Adam Whitney
+## Commodore 64 Game
 
+- **By Adam Whitney (Copyright 2023)**
 - **Entry for 2023 BASIC 10Liner Contest**
 - **Category: PUR-80**
 - **Written for Commodore 64 BASIC V2**
-- **Adam Whitney - Copyright 2023**
 
 ## Intro
 
@@ -62,7 +62,7 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
   - **t$** : Scoreboard Message
   - **ti$="000000"** : Reset System Timer
 - **Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data**
-  - **pokev,50:pokev+1,80** : Set X/Y Coordinations of Panda Sprite
+  - **pokev,50:pokev+1,80** : Set X/Y Coordinates of Panda Sprite
   - **pokev+21,3** : Enabled Sprites 0 and 1 (Panda and Donut)
   - **pokev+28,1** : Enabled Multi-Color Mode on Sprite 0
   - **pokev+39,1** : Set Main Sprite Color to White
@@ -111,6 +111,8 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
   - **pokev+j,x** : Move the Sprite
   - **e=ti/60** : Update Elapsed Timer
   - **return** : Return to Main Program Loop
+
+## In-Depth Explanation of BASIC Code
 
 Below is a verbose explanation of what happens in each of these program lines. [ [YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut) ]
 
