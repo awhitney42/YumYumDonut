@@ -15,7 +15,30 @@ Yum Yum Donut is my first video game creation! It was inspired (and named) by my
 
 I created it as a contest entry into the [BASIC 10Liner Contest](https://www.homeputerium.de/) in the PUR-80 category.
 
-## Starting the Game
+## How to Play
+
+You are a panda with a hankering for a scrumptious donut. When you try to take a bite, you are surprised to see the donut running away! It is so tasty, you must pursue it and take as many yummy bites as possible.
+
+**Use the joystick to move the panda** in pursuit of the donut. Each successful bite increases your experience of Yum! Each bite also makes the donut harder to catch.
+
+How many bites can you take in 90 seconds before the game is over?
+
+## File List
+
+- README.txt : README file containing the following:
+  - Intro and Directions for How to Play
+  - Starting the Game via Emulator (or Original C64 Hardware)
+  - File List
+  - Full Program Listing for PUR-80 Category (10 Lines with 80 Characters Max)
+  - BASIC Code Explanation
+- yumyumdonut.bas : BASIC program code listing
+- yumyumdonut.prg : Yum Yum Donut Commodore 64 Program
+- yumyumdonut.d64 : Yum Yum Donut Commodore 64 Disk Image
+- Yum Yum Donut - Game Cover Art.jpg : Game Cover Art
+- Yum Yum Donut - Game.png : Game Screenshot
+- Yum Yum Donut - Program Listing.png : Program Listing Screenshot
+
+## Starting the Game via Emulator (or Original C64 Hardware)
 
 Drag YUMYUMDONUT.PRG to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that the joystick is configured for a keyboard mapping that works for you.
 
@@ -29,21 +52,9 @@ Type LIST you want to see the program listing:
     LOAD "YUMYUMDONUT",8
     LIST
 
-## How to Play
+## Full Program Listing for PUR-80 Category (10 Lines with 80 Characters Max)
 
-You are a panda with a hankering for a scrumptious donut. When you try to take a bite, you are surprised to see the donut running away! It is so tasty, you must pursue it and take as many yummy bites as possible.
-
-**Use the joystick to move the panda** in pursuit of the donut. Each successful bite increases your experience of Yum! Each bite also makes the donut harder to catch.
-
-How many bites can you take in 90 seconds before the game is over?
-
-## BASIC Code Explanation
-
-The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code.
-
-Each logical line has a max of 80 characters allowed for the PUR-80 category. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
-
-Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
+Below is the *entire* 10-line BASIC program listing for Yum Yum Donut.2
 
     0 s=12288:v=53248:poke2040,192:poke2041,193:t$="{clr}{home}donut! yum":ti$="000000"
     1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7
@@ -55,6 +66,14 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut. In order 
     7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:a$="{wht}"
     8 g=24+e/5:printt$a$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g
     9 c=-(j>1):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:e=ti/60:return
+
+The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code.
+
+In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
+
+Each logical line has a max of 80 characters allowed for the PUR-80 category. Loading of data or program parts from mass storage is not allowed. The 10 lines cannot contain any machine code—it must simply use the factory built-in BASIC for an 8-bit machine, in this case BASIC V2 on the Commodore 64.
+
+## BASIC Code Explanation
 
 - **Line 0 : Set Memory Location Constants, Sprite Pointers, Scoreboard Message, and Reset System Timer**
   - **s** : Sprite Data Memory Location at 12288
