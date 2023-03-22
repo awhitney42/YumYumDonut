@@ -148,7 +148,7 @@ Lines 4, 5, and 6 hold the sprite data that defines the shapes of the panda and 
 
 `5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0:ife>70thena$="{yel}"`
 
-The 'ife>70thena$="{yel}' statement checks the elapsed time to see if it exceeds 70 seconds. If so, then the scoreboard color in **a$** will be set to yellow to indicate that time is running out.
+The `ife>70thena$="{yel}"` statement checks the elapsed time to see if it exceeds 70 seconds. If so, then the scoreboard color in **a$** will be set to yellow to indicate that time is running out.
 
 #### Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, Get New Random Number, and Keep Looping ####
 
