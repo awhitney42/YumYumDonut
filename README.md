@@ -4,8 +4,8 @@
 ## Commodore 64 Game
 
 - **By Adam Whitney (Copyright 2023)**
-- **Entry for 2023 BASIC 10Liner Contest**
-- **Category: PUR-80**
+- **2023 BASIC 10Liner Contest Entry**
+- **PUR-80 Category**
 - **Written for Commodore 64 BASIC V2**
 - **[YumYumDonut on GitHub](https://github.com/awhitney42/YumYumDonut)**
 
