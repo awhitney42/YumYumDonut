@@ -89,7 +89,7 @@ Then `j = z * 2 + 2` statement sets a value of **j** to be a random floating poi
 
 With the `f = peek(v + 30) and 1` statement, **v+30** is the memory location that indicates a sprite collision. The **f** variable is the result of a **PEEK** at the value in that location with an **AND** operation with value of 1 as the second operand. Using an operand of 1 for this AND operation checks for any sprite collision with Sprite 0 (panda), where a resulting value of 1 indicates a collision with another sprite (the donut).
 
-The next statement `on f + 1 gosub 9, 8` will GOSUB 9 if the value of **f** is 0 or GOSUB 8 if the value of **f** is 1. In other words, if there was no sprite collision, then GOSUB 9 will be performed and the donut to move. If there was a sprite collision, however, then GOSUB 8 will be performed. As you can probably guess subroutine 8 handles the action of taking a bite of the donut!
+The next statement `on f + 1 gosub 9, 8` will GOSUB 9 if the value of **f** is 0 or GOSUB 8 if the value of **f** is 1. In other words, if there was no sprite collision, then GOSUB 9 will be performed and the donut will move. If there was a sprite collision, however, then GOSUB 8 will be performed. As you can probably guess subroutine 8 handles the action of taking a bite of the donut!
 
 The last statement `f = peek(56320) and 15` sets the variable **f** to be the result of a PEEK in location **56320** (the address showing the current state of the joystick) with an AND operation using 15 as the second operand. The value of 15 for the operand produces the following results:
 
