@@ -191,7 +191,7 @@ When the sprites collide, subroutine 8 is called. This increments the Yum score 
 
 `8 g=24+e/5:printt$a$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g`
 
-At the start of this line `g = 24 + e / 5` sets the frequency value for the sound effect. The value of **g** is set to the constant value of 24plus the current elapsed time divided by 5. The resulting value will make the pitch of the sound effect increases in frequency every 5 seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
+At the start of this line `g = 24 + e / 5` sets the frequency value for the sound effect. The value of **g** is set to the constant value of 24 plus the current elapsed time divided by 5. The resulting value will make the pitch of the sound effect increases in frequency every 5 seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
 
 The `print a$ t$ h` statement prints the scoreboard color in **a$** then the scoreboard message in **t$** followed by the current YUM! score **h** to the top of the screen.
 
