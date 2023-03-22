@@ -29,16 +29,16 @@ The BASIC 10Liner Contest is an extreme challenge of creating an entire video ga
 
 Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
 
-    0 w=192:s=w*64:v=53248:poke2040,w:poke2041,w+1:t$="{clr}{home}{wht}donut! yum":ti$="000000"
-    1 pokev,w/2:pokev+1,w:pokev+21,3:pokev+28,1:pokev+39,1:y=0:q=54272:gosub7:gosub7
+    0 s=12288:v=53248:poke2040,192:poke2041,193:t$="{clr}{home}donut! yum":ti$="000000"
+    1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7
     2 onkgosub9,9,9,9:j=z*2+2:f=peek(v+30)and1:onf+1gosub9,8:f=peek(56320)and15
-    3 l=37:k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*l:b=h*z:ifti>q/10thenend
+    3 k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*37:b=h*z:z=rnd(1):ife>90thenend
     4 data3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2
-    5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51,0,0,97
-    6 data128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:j=int((k-1)/2):z=rnd(1):goto2
-    7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:w=24
-    8 g=w+ti/300:printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g
-    9 c=int(j/2):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:return
+    5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0:ife>70thena$="{yel}"
+    6 data63,0,0,51,0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:j=-(k>2):goto2
+    7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:a$="{wht}"
+    8 g=24+e/5:printt$a$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g
+    9 c=-(j>1):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:e=ti/60:return
 
 Here is an explanation of what happens in each of these program lines.
 
@@ -47,13 +47,12 @@ Here is an explanation of what happens in each of these program lines.
 
 Lines 0 is the first of two lines that comprise the main initialization sequence.
 
-`0 w=192:s=w*64:v=53248:poke2040,w:poke2041,w+1:t$="{clr}{home}{wht}donut! yum":ti$="000000"`
+`0 s=12288:v=53248:poke2040,192:poke2041,193:t$="{clr}{home}donut! yum":ti$="000000"`
 
-- w=192 : **w** is the a constant value 192 that will be used for the sprite data memory and associated pointers.
-- s=w*64 : **s** is the memory address for the sprite data. Referencing **s** later will allow setting values in the address space that draws the sprites for the game (i.e. the panda and the donut). The memory address is calculated here as w * 64 = 12288.
+- s=12288 : **s** is the memory address for the sprite data. Referencing **s** later will allow setting values in the address space that draws the sprites for the game (i.e. the panda and the donut).
 - v=53248 : **v** is the memory address for controlling the sprites. Referencing **v** later will allow setting values that control the properties and movment of the sprites.
-- poke2040,w:poke2041,w+1 : These two lines set the pointers for Sprite 0 (panda) and Sprite 1 (donut), and are based on the **w** constant of 192. Each sprite is 64 bytes in length, so 192 * 64 = 12288 specifies the starting address of Sprite 0, and 193 * 64 = 12352 specifies the starting address of Sprite 1.
-- t$="{clr}{home}{wht}donut! yum" : **t$** is the message that will be printed on the game scoreboard at the top of the screen.
+- poke2040,192:poke2041,193 : These two lines set the pointers for Sprite 0 (panda) and Sprite 1 (donut), and are based on the **w** constant of 192. Each sprite is 64 bytes in length, so 192 * 64 = 12288 specifies the starting address of Sprite 0, and 193 * 64 = 12352 specifies the starting address of Sprite 1.
+- t$="{clr}{home}donut! yum" : **t$** is the message that will be printed on the game scoreboard at the top of the screen.
 - ti$="000000" : This sets the system clock to 00:00:00 to start the game's countdown timer.
 
 *Note:* Books on this topic would correctly encourage you add two more statements to the game initialization code:
@@ -65,7 +64,7 @@ As our BASIC program will never use that much dynamic free memory, we can safely
 
 #### Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data ####
 
-`1 pokev,w/2:pokev+1,w:pokev+21,3:pokev+28,1:pokev+39,1:y=0:q=54272:gosub7:gosub7`
+`1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7`
 
 - pokev,50:pokev+1,80 : If you recall, **v** is the memory address for controlling the sprites. These two lines set the X and Y position of Sprite 0 (panda). The position of Sprite 1 (donut) will be later set to random coordinates. The X and Y values of 50 and 80 respectively get the panda sprite visible and positioned on the screen.
 - pokev+21,3 : This is a bitmask byte to enable (make visible) the sprites. Setting this to a value of 3 (2+1) enables Sprites 0 and 1.
@@ -103,15 +102,13 @@ The last statement `f = peek(56320) and 15` sets the variable **f** to be the re
  
 #### Line 3 : Calculate Sprite Movement Values and Check Game Timer ####
  
-`l=37:k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*l:b=h*z:ifti>q/10thenend`
+`3 k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*37:b=h*z:z=rnd(1):ife>90thenend`
 
-Line 3 contains most of the remainder of the main program loop, with the exception of a few statements at the end of line 6.
+Line 3 contains most of the remainder of the main program loop, with the exception of a few statements at the end of lines 5 and 6.
 
 The statements in this line set some essential variables that are used in the sprite movement routine on line 9, which will be called in the next iteration of the main loop when line 2 is reached again.
 
-First, a constant **l** is set to 37 with `l=37`. This constant is used in the sprite movement calculation.
-
-Next the value of **k** is set, which if you recall will be used to perform a sprite movement at the start of line 2 if k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = f - int(f / 5) * 5` or **f** MODULO 5:
+First the value of **k** is set, which if you recall will be used to perform a sprite movement at the start of line 2 if k equals 1, 2, 3, or 4. As you probably can guess, **k** will be one of these four values if the joystick is pressed in the up, down, left, or right directions. This is done with `k = f - int(f / 5) * 5` or **f** MODULO 5:
 
 **k**:
 - 11 MOD 5 = **1 (Left)**
@@ -120,7 +117,7 @@ Next the value of **k** is set, which if you recall will be used to perform a sp
 - 14 MOD 5 = **4 (Up)**
 - 15 MOD 5 = *0 (No Direction Pushed)*
 
-The next statement in this line `d = (2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * l` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in line 6, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value of **l** or 37. Using 37 applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
+The next statement in this line `d = (2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * 37` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in a moment, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value 37, which applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
 
 So **d** as derived from **k**, before the random jump value is applied, will be the following values:
 - (2 * (INT(0/2) - INT(0/4) * 2) - 1) = **-1 (No Movement)**
@@ -131,11 +128,13 @@ So **d** as derived from **k**, before the random jump value is applied, will be
 
 As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or decrease its X/Y coordinates based on **d**, moving it in the correct direction.
 
-If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * l` or `-1 * z * l`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -37, providing the random jump distance for the donut. 
+If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * 37` or `-1 * z * 37`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -37, providing the random jump distance for the donut. 
 
 The next statement is `b = h * z`. If you recall, **z** is a random floating point number between 0 and 1. As you will see in line 8, **h** is the current score. So, the value of **b** calculated here will be a fraction of the current score, that will become randomly larger (on average) as the score increases. This **b** value will be used in the sprite movement subroutine on line 9 to jump the donut a larger distance as the score increases, making the game progressively more difficult.
 
-The final statement in this line `if ti > q / 10 then end` checks the built-in system timer variable TI to see if it exceeds approximately 90 seconds. If so, then the game will be over. Hurry, panda! You only have 90 seconds to eat the donut!
+`z = rnd(1)` places a random floating point number between 0 and 1 into the **z** variable for the next iteration of the game loop.
+
+The final statement in this line `if e > 90 then end` checks the elapsed time to see if it exceeds 90 seconds. If so, then the game will be over. Hurry, panda! You only have 90 seconds to eat the donut!
 
 
 #### Line 4 : Sprite Shape Data ####
@@ -145,27 +144,26 @@ Lines 4, 5, and 6 hold the sprite data that defines the shapes of the panda and 
 `4 data3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2`
 
 
-#### Line 5 : More Sprite Shape Data ####
+#### Line 5 : More Sprite Shape Data and Scoreboard Color for Game End ####
 
-`5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0,63,0,0,51,0,0,97`
+`5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0:ife>70thena$="{yel}"`
 
+The 'ife>70thena$="{yel}' statement checks the elapsed time to see if it exceeds 70 seconds. If so, then the scoreboard color in **a$** will be set to yellow to indicate that time is running out.
 
 #### Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, Get New Random Number, and Keep Looping ####
 
-Line 7 has the remainder of the sprite data. There are three additional statements at the end.
+Line 6 has the remainder of the sprite data. There are two additional program statements at the end.
 
-`6 data128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:j=int((k-1)/2):z=rnd(1):goto2`
+`6 data63,0,0,51,0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:j=-(k>2):goto2`
 
-After the sprite data in line 6, the next statement `j = int((k - 1) / 2)` sets **j** to the following values based on **k**:
+After the sprite data in line 6, the next statement `j = -(k > 2)` sets **j** to the following values based on **k**:
 
 **j**:
-- INT((0 - 1) / 2) = *-1 (No Movement)*
-- INT((1 - 1) / 2) = **0 (Left)**
-- INT((2 - 1) / 2) = **0 (Right)**
-- INT((3 - 1) / 2) = **1 (Down)**
-- INT((4 - 1) / 2) = **1 (Up)**
-
-`z=rnd(1)` places a random floating point number between 0 and 1 into the **z** variable.
+- *k = -1 : (0 No Movement)*
+- k = 1 : **0 (Left)**
+- k = 2 : **0 (Right)**
+- k = 3 : **1 (Down)**
+- k = 4 : **1 (Up)**
 
 The last statement is the final statement in the program's main loop. `goto 2` does just that! It jumps to line 2, starting the main loop all over again!
 
@@ -174,7 +172,7 @@ The last statement is the final statement in the program's main loop. `goto 2` d
 
 Line 7 is the first of three subroutines in the program. This subroutine is called twice in line 2 to draw (POKE) the sprite shape data into memory, starting at the location stored in **s** that holds the memory address of the start of Sprite 0.
 
-`7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:w=24`
+`7 z=y+32:forx=ytoz:reada:pokes+x,a:next:forx=z+1toz+31:pokes+x,0:next:y=x:a$="{wht}"`
 
 This subroutine has two loops. The first FOR loop starts at the value in **y** (which is initially set to 0 on line 1) and then loops each iteration by 1 until it reaches y + 32, in order to load 33 bytes of data into each sprite data location in memory. The loop iterator index **x** is added to the sprite memory location **s** (memory location 12288) to specify where to POKE the sprite data byte into memory. So when this subroutine runs the first time, the first loop POKEs data into 12288+0 to 12288+32 to draw Sprite 0.
 
@@ -184,22 +182,22 @@ The second FOR loop in this subroutine writes zeroes to the remaining sprite dat
 
 The next statement in this sub is `y=x`. After the first run, this sets the **y** value to 63. This value will POKE the sprite data into 12288+63 to 12288+127 when this subroutine is called a second time to draw Sprite 1.
 
-The final statement in this sub is `w=24`. This sets the baseline sound effect frequency value used in SUB 8.
+The final statement `a$="{wht}"` sets the intial scoreboard color to white.
 
 
 #### Line 8 : SUBROUTINE - Increment Score and Play Sound Effects ####
 
 When the sprites collide, subroutine 8 is called. This increments the Yum score shown on the screen and then plays a sound effect.
 
-`8 g=w+ti/300:printt$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g`
+`8 g=24+e/5:printt$a$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g`
 
-At the start of this line `g = w + ti / 300` sets the frequency value for the sound effect. The value of **g** is set to the constant **w** (a value of 24 set in line 7) plus the current system timer value divided by 300. The result is that the pitch of the sound effect increases in frequency every few seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
+At the start of this line `g = 24 + e / 5` sets the frequency value for the sound effect. The value of **g** is set to the constant value of 24plus the current elapsed time divided by 5. The resulting value will make the pitch of the sound effect increases in frequency every 5 seconds as the game goes on, adding a sense of urgency and an indicator for how much time may be left before the game is over.
 
-The `print t$ h` statement prints the scoreboard message in **t$** followed by the current YUM! score **h** to the top of the screen.
+The `print a$ t$ h` statement prints the scoreboard color in **a$** then the scoreboard message in **t$** followed by the current YUM! score **h** to the top of the screen.
 
 The `h=h+1` statement obviously increments the score counter.
 
-The remaining statements that POKE to t**q** control the SID sound chip in order to play the sound effects.
+The remaining statements that POKE to **q** (the SID sound chip) are what play the sound effects.
 
 `pokeq+4,0` resets the SID chip to ready it for the sound
 
@@ -220,11 +218,11 @@ Now, if you have eagle eyes then you may have noticed that lines 7 and 8 don't e
 
 All of the sprite movement is performed by the tenth and final line of the program. This subroutine is called by line 2 at least once per program loop, and the **j**, **d**, and **b** values are used to specify which sprite to move, which direction to move it, and by what amount.
 
-`9 c=int(j/2):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:return`
+`9 c=-(j>1):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:e=ti/60:return`
 
 This still seems like a bit of magic to me, and I wrote it! The BASIC code, however, is actually quite simple once you understand the possible values of **j** and **d** that might be present when sub 9 is called and how they affect the sprite movement. The explanation here is very long, but the goal is to sure it is understood how this one line (interacting with lines 2, 3, and 6 where **j** and **d** are calculated) can control all sprite movement in the entire game!
 
-The first statement `c=int(j/2)` calculates a value of **c** as follows:
+The first statement `c = -(j > 1)` calculates a value of **c** as follows:
 
 - **c** = **0** if **j** is 0 or 1
 - **c** = **1** if **j** is 1 or 2
@@ -262,7 +260,9 @@ The next statement `x = x - int((x) /239) * 239` or `x = x MOD 239` adjusts the 
 
 The next statement `poke v + j, x` simply moves the sprite to the **x** coordinate using the **j** index! As we just discussed, **j** will be 0 or 1 when this sub is called after the joystick is moved, so this always moves the panda (Sprite 0) whenever the joystick is moved, allowing the user to control only the panda!
 
-Finally, the subroutine RETURNs to line 2.
+The `e = ti / 60` statement sets the elasped timer (in seconds) by dividing the system timer TI by 60.
+
+At the end, the subroutine RETURNs to line 2.
 
 **The Random Jumping Donut**
 
