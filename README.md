@@ -32,7 +32,7 @@ Below is the entire 10-line BASIC program listing for Yum Yum Donut. In order to
     0 s=12288:v=53248:poke2040,192:poke2041,193:t$="{clr}{home}donut! yum":ti$="000000"
     1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7
     2 onkgosub9,9,9,9:j=z*2+2:f=peek(v+30)and1:onf+1gosub9,8:f=peek(56320)and15
-    3 k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*37:b=h*z:z=rnd(1):ife>90thenend
+    3 k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*33:b=h*z:z=rnd(1):ife>90thenend
     4 data3,234,240,3,170,176,2,170,160,2,251,224,2,251,224,2,234,224,2,238,224,2
     5 data174,160,2,191,160,2,170,160,2,170,160,0,0,0,0,0,0,12,0,0:ife>70thena$="{yel}"
     6 data63,0,0,51,0,0,97,128,0,97,128,0,51,0,0,63,0,0,12,0,0,0,0,0:j=-(k>2):goto2
@@ -102,7 +102,7 @@ The last statement `f = peek(56320) and 15` sets the variable **f** to be the re
  
 #### Line 3 : Calculate Sprite Movement Values and Check Game Timer ####
  
-`3 k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*37:b=h*z:z=rnd(1):ife>90thenend`
+`3 k=f-int(f/5)*5:d=(2*(int(k/2)-int(k/4)*2)-1)*z*33:b=h*z:z=rnd(1):ife>90thenend`
 
 Line 3 contains most of the remainder of the main program loop, with the exception of a few statements at the end of lines 5 and 6.
 
@@ -117,7 +117,7 @@ First the value of **k** is set, which if you recall will be used to perform a s
 - 14 MOD 5 = **4 (Up)**
 - 15 MOD 5 = *0 (No Direction Pushed)*
 
-The next statement in this line `d = (2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * 37` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in a moment, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value 37, which applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
+The next statement in this line `d = (2 * (int(k / 2) - int(k / 4) * 2) - 1) * z * 33` sets **d** to a value that is based largely on **k**. At the end of the expression, you can see `* z * l`. As you will see in a moment, **z** is a random floating point number between 0 and 1, which applies some randomness to the final value of **d**. This is then multiplied by a constant value 33, which applies a reasonable amount of distance on the screen when the sprites are moved in the subroutine at line 9. 
 
 So **d** as derived from **k**, before the random jump value is applied, will be the following values:
 - (2 * (INT(0/2) - INT(0/4) * 2) - 1) = **-1 (No Movement)**
@@ -128,7 +128,7 @@ So **d** as derived from **k**, before the random jump value is applied, will be
 
 As you can see, **d** is either positive or negative based on the joystick direction, and the sprite will therefore either increase or decrease its X/Y coordinates based on **d**, moving it in the correct direction.
 
-If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * 37` or `-1 * z * 37`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -37, providing the random jump distance for the donut. 
+If there is no joystick movement and **k** is -1, then **d** will be evaluated to `(2 * (0 - int(0 / 2) * 2) - 1) * z * 33` or `-1 * z * 33`. As **z** is a random number between 0 and 1, the resulting **d** will be a random value between 0 and -33, providing the random jump distance for the donut. 
 
 The next statement is `b = h * z`. If you recall, **z** is a random floating point number between 0 and 1. As you will see in line 8, **h** is the current score. So, the value of **b** calculated here will be a fraction of the current score, that will become randomly larger (on average) as the score increases. This **b** value will be used in the sprite movement subroutine on line 9 to jump the donut a larger distance as the score increases, making the game progressively more difficult.
 
@@ -277,7 +277,7 @@ Given these values of **j**, when sub 9 runs `x = peek( v + (j - c * 2)) + d - (
 
 So, in the expression `x = peek( v + (j - c * 2)) + d - (c * b)` the value from the PEEK will be based on the position of the panda.
 
-With there having been no joystick movement, **d** will always be a negative random number between 0 and 37 based on the calculation in line 3.
+With there having been no joystick movement, **d** will always be a negative random number between 0 and 33 based on the calculation in line 3.
 
 At the end of the expression `(c * b)` is subtracted from the coordinate. If you recall, **c** will be 1 when the donut sprite is selected and **b** is a random value that increases in magnitude as the game score increases. (**d** is always a negative number when the donut is moving, which is why **c * b** is subtracted instead of added.) This results in the **x** coordinate that is on average farther away from the panda as the score increases, making it progressively harder to catch!
 
