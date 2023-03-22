@@ -1,10 +1,12 @@
 <p align="center"><img src="https://adamwhitney.net/static/images/YumYumDonut-GameCoverArt.jpg" alt="Cover Art" width="200" height="320"></p>
 
-# Yum Yum Donut © 2023 Adam Whitney
+# Yum Yum Donut
+## Commodore 64 Game by Adam Whitney
 
 - **Entry for 2023 BASIC 10Liner Contest**
 - **Category: PUR-80**
 - **Written For: Commodore 64 BASIC V2**
+- **© 2023 Adam Whitney**
 
 ## Intro
 
