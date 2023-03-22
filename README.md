@@ -40,7 +40,7 @@ How many bites can you take in 90 seconds before the game is over?
 
 ## Starting the Game via Emulator (or Original C64 Hardware)
 
-Drag YUMYUMDONUT.PRG to your VICE emulator to load the game. Make sure the joystick in port 2 is enabled in the VICE input device settings, and that the joystick is configured for a keyboard mapping that works for you.
+**Drag YUMYUMDONUT.PRG to your VICE emulator to load the game.** Make sure the joystick in port 2 is enabled in the VICE input device settings, and that the joystick is configured for a keyboard mapping that works for you.
 
 If you have original hardware, the copy the YUMYUMDONUT.D64 image to a floppy disk or load it via a device such as an SD2IEC. Assuming your floppy or SD2IEC drive is device #8, then issue the following commands:
 
