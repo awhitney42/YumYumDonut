@@ -149,7 +149,7 @@ Lines 4, 5, and 6 hold the sprite data that defines the shapes of the panda and 
 
 The `if e > 70 then a$ = "{yel}"` statement checks the elapsed time to see if it exceeds 70 seconds. If so, then the scoreboard color in **a$** will be set to yellow to indicate that time is running out.
 
-#### Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, Get New Random Number, and Keep Looping ####
+#### Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping ####
 
 Line 6 has the remainder of the sprite data. There are two additional program statements at the end.
 
