@@ -2,7 +2,7 @@
 **Commodore 64 Game**
 
 - By Adam Whitney (Copyright 2023)
-- 2023 BASIC 10Liner Contest Entry
+- 2023 BASIC 10Liner Contest Entry (https://bunsen.itch.io/)
 - PUR-80 Category
 - Written for Commodore 64 BASIC V2
 - YumYumDonut on GitHub (https://github.com/awhitney42/YumYumDonut)**
