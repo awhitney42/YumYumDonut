@@ -5,7 +5,7 @@
 
 - **Entry for 2023 BASIC 10Liner Contest**
 - **Category: PUR-80**
-- **Written For: Commodore 64 BASIC V2**
+- **Written for Commodore 64 BASIC V2**
 - **Adam Whitney - Copyright 2023**
 
 ## Intro
