@@ -49,11 +49,11 @@ Lines 0 is the first of two lines that comprise the main initialization sequence
 
 `0 s=12288:v=53248:poke2040,192:poke2041,193:t$="{clr}{home}donut! yum":ti$="000000"`
 
-- s=12288 : **s** is the memory address for the sprite data. Referencing **s** later will allow setting values in the address space that draws the sprites for the game (i.e. the panda and the donut).
-- v=53248 : **v** is the memory address for controlling the sprites. Referencing **v** later will allow setting values that control the properties and movment of the sprites.
-- poke2040,192:poke2041,193 : These two lines set the pointers for Sprite 0 (panda) and Sprite 1 (donut), and are based on the **w** constant of 192. Each sprite is 64 bytes in length, so 192 * 64 = 12288 specifies the starting address of Sprite 0, and 193 * 64 = 12352 specifies the starting address of Sprite 1.
-- t$="{clr}{home}donut! yum" : **t$** is the message that will be printed on the game scoreboard at the top of the screen.
-- ti$="000000" : This sets the system clock to 00:00:00 to start the game's countdown timer.
+- `s=12288` : **s** is the memory address for the sprite data. Referencing **s** later will allow setting values in the address space that draws the sprites for the game (i.e. the panda and the donut).
+- `v=53248` : **v** is the memory address for controlling the sprites. Referencing **v** later will allow setting values that control the properties and movment of the sprites.
+- `poke2040,192:poke2041,193` : These two lines set the pointers for Sprite 0 (panda) and Sprite 1 (donut), and are based on the **w** constant of 192. Each sprite is 64 bytes in length, so 192 * 64 = 12288 specifies the starting address of Sprite 0, and 193 * 64 = 12352 specifies the starting address of Sprite 1.
+- `t$="{clr}{home}donut! yum"` : **t$** is the message that will be printed on the game scoreboard at the top of the screen.
+- `ti$="000000"` : This sets the system clock to 00:00:00 to start the game's countdown timer.
 
 *Note:* Books on this topic would correctly encourage you add two more statements to the game initialization code:
 
@@ -66,13 +66,13 @@ As our BASIC program will never use that much dynamic free memory, we can safely
 
 `1 pokev,50:pokev+1,80:pokev+21,3:pokev+28,1:pokev+39,1:q=54272:y=0:gosub7:gosub7`
 
-- pokev,50:pokev+1,80 : If you recall, **v** is the memory address for controlling the sprites. These two lines set the X and Y position of Sprite 0 (panda). The position of Sprite 1 (donut) will be later set to random coordinates. The X and Y values of 50 and 80 respectively get the panda sprite visible and positioned on the screen.
-- pokev+21,3 : This is a bitmask byte to enable (make visible) the sprites. Setting this to a value of 3 (2+1) enables Sprites 0 and 1.
-- pokev+28,1 : This turns on multi-color mode for the sprites. Setting this to a value of 1 enables multi-color mode for only Sprite 0, allowing the panda to have the black and white color pattern.
-- pokev+39,1 : This sets the main sprite color of the panda sprite to be white.
-- q=54272 : **q** is the memory address for controlling the SID (Sound Interface Device). Referencing **q** later will allow for controlling the game's sound effects.
-- y = 0 : **y** will be the counter used for populating the sprite data in line 7.
-- gosub7:gosub7 : The calls the subroutine at line 7 two times. Each time this runs, it loads the shape data for the each of the two sprites.
+- `pokev,50:pokev+1,80` : If you recall, **v** is the memory address for controlling the sprites. These two lines set the X and Y position of Sprite 0 (panda). The position of Sprite 1 (donut) will be later set to random coordinates. The X and Y values of 50 and 80 respectively get the panda sprite visible and positioned on the screen.
+- `pokev+21,3` : This is a bitmask byte to enable (make visible) the sprites. Setting this to a value of 3 (2+1) enables Sprites 0 and 1.
+- `pokev+28,1` : This turns on multi-color mode for the sprites. Setting this to a value of 1 enables multi-color mode for only Sprite 0, allowing the panda to have the black and white color pattern.
+- `pokev+39,1` : This sets the main sprite color of the panda sprite to be white.
+- `q=54272` : **q** is the memory address for controlling the SID (Sound Interface Device). Referencing **q** later will allow for controlling the game's sound effects.
+- `y = 0` : **y** will be the counter used for populating the sprite data in line 7.
+- `gosub7:gosub7` : The calls the subroutine at line 7 two times. Each time this runs, it loads the shape data for the each of the two sprites.
 
 
 #### Line 2 : Start of Main Loop - Call Sprite Movement Subroutines, Check for Sprite Collision, and Read Joystick Position ####
