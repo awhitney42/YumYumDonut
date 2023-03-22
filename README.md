@@ -225,7 +225,7 @@ This still seems like a bit of magic to me, and I wrote it! The BASIC code, howe
 The first statement `c = -(j > 1)` calculates a value of **c** as follows:
 
 - **c** = **0** if **j** is 0 or 1
-- **c** = **1** if **j** is 1 or 2
+- **c** = **1** if **j** is 2 or 3
 
 The next statement `x = peek( v + (j - c * 2)) + d - (c * b)` calculates the coordinate to use for moving the sprite.
 
