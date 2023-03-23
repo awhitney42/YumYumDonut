@@ -86,8 +86,8 @@ Each logical line has a max of 80 characters allowed for the PUR-80 category. Lo
   - `ti$="000000"` : Reset System Timer
 ### Line 1 : Set Sprite Properties, SID Address, and Draw Sprite Data
   - `pokev,50:pokev+1,80` : Set X/Y Coordinates of Panda Sprite
-  - `pokev+21,3` : Enabled Sprites 0 and 1 (Panda and Donut)
-  - `pokev+28,1` : Enabled Multi-Color Mode on Sprite 0
+  - `pokev+21,3` : Enable Sprites 0 and 1 (Panda and Donut)
+  - `pokev+28,1` : Enable Multi-Color Mode on Sprite 0
   - `pokev+39,1` : Set Main Sprite Color to White
   - `q` : SID Chip Control at 54272
   - `y` : Initial Sprite Memory Offset to 0
