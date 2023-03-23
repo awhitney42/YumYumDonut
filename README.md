@@ -13,7 +13,7 @@
 
 Yum Yum Donut is my first video game creation! It was inspired (and named) by my daughter, who loves pandas and believes that they should be able to enjoy delicious donuts too.
 
-I created it as a contest entry into the [BASIC 10Liner Contest](https://www.homeputerium.de/) in the PUR-80 category.
+I created it as a contest entry into the [BASIC 10Liner Contest](https://bunsen.itch.io/) in the PUR-80 category.
 
 ## How to Play
 
@@ -67,7 +67,7 @@ Below is the *entire* 10-line BASIC program listing for Yum Yum Donut.
     8 g=24+e/5:printt$a$h:h=h+1:pokeq+4,0:pokeq+4,17:pokeq+24,15:pokeq+5,6:pokeq+1,g
     9 c=-(j>1):x=peek(v+(j-c*2))+d-(c*b):x=x-int(x/239)*239:pokev+j,x:e=ti/60:return
 
-The BASIC 10Liner Contest is an extreme challenge of creating an entire video game in 10 lines of BASIC code.
+The [BASIC 10Liner Contest](https://bunsen.itch.io/) is an extreme challenge of creating an entire video game in 10 lines of BASIC code.
 
 In order to create a game in 10 lines, multiple BASIC statements are included on each line, separated by the : character.
 
