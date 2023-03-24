@@ -105,7 +105,7 @@ Each logical line has a max of 80 characters allowed for the PUR-80 category. Lo
   - Sprite Data Bytes  
 - **Line 5 : More Sprite Shape Data and Scoreboard Color for Game End**
    - More Sprite Data Bytes
-   - **if e>70 then a$="{yel}** : If Game Timer > 70 Seconds Then Set Scoreboard to Yellow
+   - **if e>70 then a$="{yel}"** : If Game Timer > 70 Seconds Then Set Scoreboard to Yellow
 - **Line 6 : More Sprite Shape Data, Calculate Panda Movement Axis, and Keep Looping**
    - More Sprite Data Bytes
    - **j=-(k>2)** : Set Panda Movement Axis Based on Joystick Direction
